@@ -22,7 +22,7 @@ public class One4All extends SimpleBaseGameActivity {
     @Override
     protected Scene onCreateScene() {
         final Scene scene = new Scene();
-
+        //
         return scene;
     }
 
