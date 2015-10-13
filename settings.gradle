@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':andenginephysicsbox2dextension'
 include ':andEngine'
