@@ -20,7 +20,6 @@
         </afterSyncTasks>
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="" />
         <option name="LIBRARY_PROJECT" value="true" />
       </configuration>
     </facet>

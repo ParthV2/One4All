@@ -54,11 +54,11 @@ public class TextMenuItem extends Text implements IMenuItem {
 		this.mID = pID;
 	}
 
-	public TextMenuItem(final int pID, final IFont pFont, final CharSequence pText, final TextOptions pTextOptions, final VertexBufferObjectManager pVertexBufferObjectManager) {
-		super(0, 0, pFont, pText, pTextOptions, pVertexBufferObjectManager);
-
-		this.mID = pID;
-	}
+//	public TextMenuItem(final int pID, final IFont pFont, final CharSequence pText, final TextOptions pTextOptions, final VertexBufferObjectManager pVertexBufferObjectManager) {
+//		super(0, 0, pFont, pText, pTextOptions, pVertexBufferObjectManager);
+//
+//		this.mID = pID;
+//	}
 
 	public TextMenuItem(final int pID, final IFont pFont, final CharSequence pText, final TextOptions pTextOptions, final VertexBufferObjectManager pVertexBufferObjectManager, final ShaderProgram pShaderProgram) {
 		super(0, 0, pFont, pText, pTextOptions, pVertexBufferObjectManager, pShaderProgram);
