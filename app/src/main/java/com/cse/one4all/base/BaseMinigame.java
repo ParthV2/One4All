@@ -1,34 +1,38 @@
 package com.cse.one4all.base;
 
+import com.cse.one4all.GameActivity;
 import com.cse.one4all.managers.MinigameManager;
+import com.cse.one4all.managers.ResourcesManager;
 import com.cse.one4all.scene.MinigameScene;
-import com.cse.one4all.scene.SceneType;
 
 import org.andengine.engine.Engine;
-import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
-import org.andengine.util.adt.color.Color;
+import org.andengine.engine.camera.Camera;
+
+import java.util.Random;
 
 public abstract class BaseMinigame {
 
     protected BaseScene scene;
+    protected final Engine engine = ResourcesManager.getInstance().engine;
+    protected final GameActivity activity = ResourcesManager.getInstance().activity;
+    protected final Camera camera = ResourcesManager.getInstance().camera;
 
-    protected Engine engine;
+    protected final Random random = new Random();
 
-    private boolean complete = false;
+    protected boolean completed = false;
 
     public void complete(){
-        complete = true;
-        scene.dispose();
+        completed = true;
+        scene.disposeScene();
         disposeMinigameScene();
 
         MinigameManager.getInstance().setRandomMinigame();
     }
 
     public void createScene(){
+        completed = false;
         scene = new MinigameScene();
         scene.createScene();
-        engine = scene.engine;
         createMinigameScene();
     }
 
@@ -43,4 +47,6 @@ public abstract class BaseMinigame {
     public abstract void loadResources();
 
     public abstract void unloadResources();
+
+    public abstract void onStart();
 }

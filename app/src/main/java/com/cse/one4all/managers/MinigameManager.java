@@ -1,8 +1,8 @@
 package com.cse.one4all.managers;
 
 import com.cse.one4all.base.BaseMinigame;
+import com.cse.one4all.minigame.TapTheColor;
 import com.cse.one4all.minigame.TestMinigame;
-import com.cse.one4all.minigame.TestMinigame2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +17,7 @@ public class MinigameManager {
     private BaseMinigame currentMinigame;
 
     public MinigameManager(){
-        minigames.add(new TestMinigame());
-        minigames.add(new TestMinigame2());
+
     }
 
     public void setRandomMinigame(){
@@ -29,12 +28,13 @@ public class MinigameManager {
         minigame.createScene();
         currentMinigame = minigame;
         SceneManager.getInstance().setScene(minigame.getScene());
+        minigame.onStart();
     }
 
     public BaseMinigame getRandomMinigame(){
         List<BaseMinigame> minigameScenes = new ArrayList<>(minigames);
         if(currentMinigame != null){
-            //minigameScenes.remove(currentMinigame);
+            minigameScenes.remove(currentMinigame);
         }
         return minigameScenes.get(random.nextInt(minigameScenes.size()));
     }
@@ -43,6 +43,13 @@ public class MinigameManager {
         for (BaseMinigame m : minigames) {
             m.loadResources();
         }
+    }
+
+    public void init(){
+        minigames.add(new TestMinigame());
+        minigames.add(new TapTheColor());
+
+        loadResources();
     }
 
     public static MinigameManager getInstance(){

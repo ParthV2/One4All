@@ -15,6 +15,10 @@ import org.andengine.util.adt.color.Color;
 
 public class TestMinigame extends BaseMinigame {
 
+    @Override
+    public void onStart() {
+
+    }
 
     @Override
     public void createMinigameScene() {
