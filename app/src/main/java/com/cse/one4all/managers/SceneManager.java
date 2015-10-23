@@ -6,6 +6,8 @@ import com.cse.one4all.scene.SceneType;
 import com.cse.one4all.scene.SplashScene;
 
 import org.andengine.engine.Engine;
+import org.andengine.entity.sprite.ButtonSprite;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.ui.IGameInterface.OnCreateSceneCallback;
 
 public class SceneManager {
@@ -53,8 +55,11 @@ public class SceneManager {
     }
 
     public void createMenuScene() {
-        ResourcesManager.getInstance().loadMenuResources();
+        //ResourcesManager.getInstance().loadMenuResources();
+        //menuScene = new MenuScene();
+
         menuScene = new MenuScene();
+
         SceneManager.getInstance().setScene(menuScene);
         disposeSplashScene();
     }

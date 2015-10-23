@@ -11,6 +11,8 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 public class ResourcesManager {
@@ -21,6 +23,8 @@ public class ResourcesManager {
     public Engine engine;
     public GameActivity activity;
     public VertexBufferObjectManager vbom;
+    public BitmapTextureAtlas menuTA;
+    public ITextureRegion mBtnPlayTexture;
 
     public Font font;
 
@@ -44,8 +48,15 @@ public class ResourcesManager {
         this.loadGameAudio();
     }
 
-    public void loadMenuGraphics(){
+    public void loadMenuGraphics()
+    {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        menuTA = new BitmapTextureAtlas(activity.getTextureManager(), 600, 200, TextureOptions.BILINEAR);
+        mBtnPlayTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTA,activity, "button.png", 0, 0);
 
+
+        menuTA.load();
     }
 
     private void loadMenuAudio() {
