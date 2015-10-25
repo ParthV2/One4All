@@ -1,8 +1,10 @@
 package com.cse.one4all.managers;
 
 import com.cse.one4all.base.BaseMinigame;
+import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.TapTheColor;
 import com.cse.one4all.minigame.TestMinigame;
+import com.cse.one4all.minigame.WordScramble;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,8 @@ public class MinigameManager {
     public void init(){
         minigames.add(new TestMinigame());
         minigames.add(new TapTheColor());
+        minigames.add(new ClickThe6s());
+        minigames.add(new WordScramble());
 
         loadResources();
     }

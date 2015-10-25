@@ -26,7 +26,7 @@ public class ResourcesManager {
     public BitmapTextureAtlas menuTA;
     public ITextureRegion mBtnPlayTexture;
 
-    public Font font;
+    public Font font, menuFont;
 
     private BitmapTextureAtlas splashTextureAtlas;
 
@@ -51,9 +51,12 @@ public class ResourcesManager {
     public void loadMenuGraphics()
     {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        menuTA = new BitmapTextureAtlas(activity.getTextureManager(), 600, 200, TextureOptions.BILINEAR);
+        FontFactory.setAssetBasePath("font/");
+        menuTA = new BitmapTextureAtlas(activity.getTextureManager(), 400, 132, TextureOptions.BILINEAR);
         mBtnPlayTexture = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(menuTA,activity, "button.png", 0, 0);
+        menuFont = FontFactory.createFromAsset(activity.getFontManager(), menuTA, activity.getAssets(), "Radley-Regular.ttf", 50, true, Color.BLACK);
+        menuFont.load();
 
 
         menuTA.load();

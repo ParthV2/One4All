@@ -56,10 +56,14 @@ public class TapTheColor extends BaseMinigame {
         Colors.add(Color.RED);
         Colors.add(Color.BLUE);
 
-        mCircle = new TiledSprite(camera.getCenterX() - (mCircleTiledTextureRegion.getWidth() / 2), camera.getCenterY() - (mCircleTiledTextureRegion.getHeight() / 2), mCircleTiledTextureRegion, scene.vbom){
+        mCircle = new TiledSprite(camera.getCenterX() - (mCircleTiledTextureRegion.getWidth() / 2), camera.getCenterY() -
+                (mCircleTiledTextureRegion.getHeight() / 2), mCircleTiledTextureRegion, scene.vbom)
+        {
             @Override
-            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if(currentTextName == mCircle.getCurrentTileIndex()){
+            public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
+            {
+                if(currentTextName == mCircle.getCurrentTileIndex())
+                {
                     complete();
                 }
                 return true;
