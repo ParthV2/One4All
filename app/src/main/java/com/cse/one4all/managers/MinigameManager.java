@@ -5,6 +5,7 @@ import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.TapTheColor;
 import com.cse.one4all.minigame.TestMinigame;
 import com.cse.one4all.minigame.WordScramble;
+import com.cse.one4all.minigame.Helicopter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class MinigameManager {
         minigames.add(new TapTheColor());
         minigames.add(new ClickThe6s());
         minigames.add(new WordScramble());
+        minigames.add(new Helicopter());
 
         loadResources();
     }
