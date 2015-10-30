@@ -23,12 +23,10 @@ public class ResourcesManager {
     public Engine engine;
     public GameActivity activity;
     public VertexBufferObjectManager vbom;
-    public BitmapTextureAtlas menuTA;
-    public ITextureRegion mBtnPlayTexture;
+    public BitmapTextureAtlas menuTA, splashTA;
+    public ITextureRegion mBtnPlayTexture, mBtnExitTexture, logoTexture, logoTexture2, mBtnCodeTexture;
 
-    public Font font, menuFont;
-
-    private BitmapTextureAtlas splashTextureAtlas;
+    public Font font;
 
     public static ResourcesManager getInstance(){
         return INSTANCE;
@@ -51,12 +49,16 @@ public class ResourcesManager {
     public void loadMenuGraphics()
     {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        FontFactory.setAssetBasePath("font/");
-        menuTA = new BitmapTextureAtlas(activity.getTextureManager(), 400, 132, TextureOptions.BILINEAR);
+        menuTA = new BitmapTextureAtlas(activity.getTextureManager(), 1200, 500, TextureOptions.BILINEAR);
         mBtnPlayTexture = BitmapTextureAtlasTextureRegionFactory.
-                createFromAsset(menuTA,activity, "button.png", 0, 0);
-        menuFont = FontFactory.createFromAsset(activity.getFontManager(), menuTA, activity.getAssets(), "Radley-Regular.ttf", 50, true, Color.BLACK);
-        menuFont.load();
+                createFromAsset(menuTA,activity, "buttonPlay.png", 0, 0);
+        mBtnExitTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTA, activity, "buttonExit.png", 0, 0);
+        mBtnCodeTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTA, activity, "button.png", 0, 0);
+        logoTexture2 = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTA,activity, "Title2.png", 0, 0);
+
 
 
         menuTA.load();
@@ -79,11 +81,16 @@ public class ResourcesManager {
     }
 
     public void loadSplashScreen() {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         FontFactory.setAssetBasePath("font/");
+        splashTA = new BitmapTextureAtlas(activity.getTextureManager(), 800, 128, TextureOptions.BILINEAR);
+        logoTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(splashTA,activity, "Title2.png", 0, 0);
         final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
         font = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), "Radley-Regular.ttf", 50, true, Color.WHITE);
         font.load();
+        splashTA.load();
     }
 
     public void unloadSplashScreen() {

@@ -50,10 +50,10 @@ public class MinigameManager {
 
     public void init(){
         minigames.add(new TestMinigame());
-        minigames.add(new TapTheColor());
+//        minigames.add(new TapTheColor());
         minigames.add(new ClickThe6s());
-        minigames.add(new WordScramble());
-        minigames.add(new Helicopter());
+        ///minigames.add(new WordScramble());
+        //minigames.add(new Helicopter());
 
         loadResources();
     }

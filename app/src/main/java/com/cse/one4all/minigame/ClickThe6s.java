@@ -27,11 +27,15 @@ public class ClickThe6s extends BaseMinigame
     private ArrayList<Text> nums = new ArrayList<Text>();
     private Font gameFont;
     private Text num3, num5, num9, num11, num14;
+    private ITextureRegion logo2Texture;
 
     @Override
     public void createMinigameScene()
     {
         //scene.setBackground(new Background(Color.GREEN));
+
+        Sprite logo = new Sprite(550, 300, logo2Texture, scene.vbom);
+        scene.attachChild(logo);
 
         final Text text = new Text(240, 400, ResourcesManager.getInstance().font, "Click the 6s", scene.vbom);
         scene.attachChild(text);
@@ -139,6 +143,13 @@ public class ClickThe6s extends BaseMinigame
         scene.attachChild(num14);
         scene.registerTouchArea(num14);
 
+        if(num3.getText().equals("9") && num14.getText().equals("9"))
+        {
+            //complete();
+            MinigameManager.getInstance().setRandomMinigame();
+            //Text message = new Text(550, 75,  ResourcesManager.getInstance().font, "You're a genius!!", scene.vbom);
+            //scene.attachChild(message);
+        }
 
 
 
@@ -156,6 +167,8 @@ public class ClickThe6s extends BaseMinigame
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         gameTA = new BitmapTextureAtlas(activity.getTextureManager(), 1280, 1280, TextureOptions.BILINEAR);
         FontFactory.setAssetBasePath("font/");
+        logo2Texture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(gameTA,activity, "Title1.png", 0, 0);
         gameFont = FontFactory.createFromAsset(activity.getFontManager(), gameTA, activity.getAssets(), "Radley-Regular.ttf", 75, true, Color.WHITE);
         gameFont.load();
         gameTA.load();
@@ -172,13 +185,7 @@ public class ClickThe6s extends BaseMinigame
     @Override
     public void onStart()
     {
-        if(num3.getText().equals("9") && num5.getText().equals("9") &&
-                num9.getText().equals("9")&& num11.getText().equals("9") && num14.getText().equals("9"))
-        {
-            //MinigameManager.getInstance().setRandomMinigame();
-            Text message = new Text(550, 75,  ResourcesManager.getInstance().font, "You're a genius!!", scene.vbom);
-            scene.attachChild(message);
-        }
+
 
     }
 }
