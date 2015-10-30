@@ -34,9 +34,9 @@ public class TapTheColor extends BaseMinigame {
         engine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mCircle.setCurrentTileIndex((mCircle.getCurrentTileIndex() + 1) % 2);
-                currentTextName = random.nextInt(ColorNames.size());
+                currentTextName = RANDOM.nextInt(ColorNames.size());
                 mText.setText(ColorNames.get(currentTextName));
-                mText.setColor(Colors.get(random.nextInt(Colors.size())));
+                mText.setColor(Colors.get(RANDOM.nextInt(Colors.size())));
 
                 if(completed){
                     engine.unregisterUpdateHandler(pTimerHandler);

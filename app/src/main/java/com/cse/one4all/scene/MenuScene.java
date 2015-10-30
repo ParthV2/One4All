@@ -3,6 +3,7 @@ package com.cse.one4all.scene;
 import com.cse.one4all.base.BaseScene;
 import com.cse.one4all.managers.MinigameManager;
 import com.cse.one4all.managers.ResourcesManager;
+import com.cse.one4all.minigame.ClickThe6Improved;
 
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.ButtonSprite;
@@ -23,8 +24,9 @@ public class MenuScene extends BaseScene {
             public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
 
-                    MinigameManager.getInstance().setRandomMinigame();
+                    //MinigameManager.getInstance().setRandomMinigame();
 
+                MinigameManager.getInstance().setMinigame(new ClickThe6Improved());
                 return true;
             }
         };

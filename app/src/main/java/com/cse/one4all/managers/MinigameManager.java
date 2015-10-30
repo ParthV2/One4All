@@ -1,6 +1,7 @@
 package com.cse.one4all.managers;
 
 import com.cse.one4all.base.BaseMinigame;
+import com.cse.one4all.minigame.ClickThe6Improved;
 import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.TapTheColor;
 import com.cse.one4all.minigame.TestMinigame;
@@ -52,6 +53,7 @@ public class MinigameManager {
         minigames.add(new TapTheColor());
         minigames.add(new ClickThe6s());
         minigames.add(new WordScramble());
+        minigames.add(new ClickThe6Improved());
 
         loadResources();
     }
