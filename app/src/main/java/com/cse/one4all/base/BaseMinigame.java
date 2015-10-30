@@ -17,7 +17,7 @@ public abstract class BaseMinigame {
     protected final GameActivity activity = ResourcesManager.getInstance().activity;
     protected final Camera camera = ResourcesManager.getInstance().camera;
 
-    protected final Random random = new Random();
+    protected static final Random RANDOM = new Random();
 
     protected boolean completed = false;
 
@@ -27,6 +27,15 @@ public abstract class BaseMinigame {
         disposeMinigameScene();
 
         MinigameManager.getInstance().setRandomMinigame();
+    }
+
+    public void pass(){
+        scene.disposeScene();
+        MinigameManager.getInstance().setRandomMinigame();
+    }
+
+    public void fail(){
+
     }
 
     public void createScene(){

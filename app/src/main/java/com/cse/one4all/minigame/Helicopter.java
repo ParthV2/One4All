@@ -15,15 +15,59 @@ import org.andengine.input.touch.TouchEvent;
 public class Helicopter extends BaseMinigame {
     private Text helicopter;
     private Text thrust;
+    private Text[] obstacle = new Text[4];
 
-    private float heliPos = 0;
-    private float heliVel = 0;
-    private final float heliAcc = -1;
+    private float heliXPos;
+    private float heliYPos;
+    private float heliVel;
+    private float heliAcc;
+
+    private int[] obstacleXPos = new int[4];
+    private int[] obstacleYPos = new int[4];
+    private int[] obstacleVel = new int[4];
 
     public void updateHeli()
     {
-        heliPos = heliPos + heliVel;
+        heliYPos = heliYPos + heliVel;
         heliVel = heliVel + heliAcc;
+    }
+
+    public void updateObstacles()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (obstacleXPos[i] < -500) {
+                obstacleXPos[i] = 500;
+                obstacleYPos[i] = random.nextInt(600) - 300;
+            } else {
+                obstacleXPos[i] = obstacleXPos[i] + obstacleVel[i];
+            }
+        }
+    }
+
+    public void updateScreen()
+    {
+        helicopter.setPosition(camera.getCenterX() + heliXPos, camera.getCenterY() + heliYPos);
+        for (int i = 0; i < 4; i++)
+        {
+            obstacle[i].setPosition(camera.getCenterX() + obstacleXPos[i], camera.getCenterY() + obstacleYPos[i]);
+        }
+    }
+
+    public void checkDeath()
+    {
+        //Death if you hit the bottom or the top
+        if (heliYPos >= camera.getCenterY() || heliYPos <= camera.getCenterY() - 450) {
+            complete();
+        }
+        //Death if you come within 10 units of the middle of an obstacle
+        for (int i = 0; i < 4; i++)
+        {
+            if (heliXPos >= obstacleXPos[i] - 10 && heliXPos <= obstacleXPos[i] + 10 && heliYPos >= obstacleYPos[i] - 10 && heliYPos <= obstacleYPos[i] + 10)
+            {
+                complete();
+            }
+        }
     }
 
     public void applyThrust()
@@ -34,16 +78,32 @@ public class Helicopter extends BaseMinigame {
     @Override
     public void onStart()
     {
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
+        //Initial Value of variables
+        heliXPos = 0;
+        heliYPos = 0;
+        heliVel = 0;
+        heliAcc = -1;
+
+        for (int i = 0; i < 4; i++)
         {
+            obstacleXPos[i] = 450 + i*250;
+            obstacleYPos[i] = random.nextInt(600) - 300;
+            obstacleVel[i] = -10;
+        }
+
+
+        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler)
             {
-                //Updates Helicopters Position and Velocity
+                //Updates Objects
                 updateHeli();
-                helicopter.setPosition(camera.getCenterX(), camera.getCenterY() + heliPos);
+                updateObstacles();
+                updateScreen();
+                checkDeath();
 
-                //Stops when helicopter hits the top or bottom of the screen
-                if(heliPos >= camera.getCenterY() || heliPos <= camera.getCenterY() - 450 ){
+                //If condition is met: exit loop, else continue loop.
+                if (completed)
+                {
                     engine.unregisterUpdateHandler(pTimerHandler);
                 } else {
                     pTimerHandler.reset();
@@ -66,8 +126,13 @@ public class Helicopter extends BaseMinigame {
             }
         };
 
-        //Helicopter Image
-        helicopter = new Text(camera.getCenterX(), camera.getCenterY() + heliPos, ResourcesManager.getInstance().font, "Helicopter", scene.vbom);
+        //Object Images
+        helicopter = new Text(camera.getCenterX() + heliXPos, camera.getCenterY() + heliYPos, ResourcesManager.getInstance().font, "H", scene.vbom);
+        for (int i = 0; i < 4; i++)
+        {
+            obstacle[i] = new Text(camera.getCenterX() + obstacleXPos[i], camera.getCenterY() + obstacleYPos[i], ResourcesManager.getInstance().font, "" + i + "", scene.vbom);
+            scene.attachChild(obstacle[i]);
+        }
 
         scene.attachChild(helicopter);
         scene.attachChild(thrust);

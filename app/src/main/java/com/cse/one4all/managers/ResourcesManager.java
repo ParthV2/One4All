@@ -26,7 +26,7 @@ public class ResourcesManager {
     public BitmapTextureAtlas menuTA, splashTA;
     public ITextureRegion mBtnPlayTexture, mBtnExitTexture, logoTexture, logoTexture2, mBtnCodeTexture;
 
-    public Font font;
+    public Font font, menuFont;
 
     public static ResourcesManager getInstance(){
         return INSTANCE;
@@ -90,6 +90,12 @@ public class ResourcesManager {
 
         font = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), "Radley-Regular.ttf", 50, true, Color.WHITE);
         font.load();
+
+        final ITexture numberFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+        numberFont = FontFactory.createFromAsset(activity.getFontManager(), numberFontTexture, activity.getAssets(), "Radley-Regular.ttf", 75, true, Color.WHITE);
+        numberFont.prepareLetters("69".toCharArray());
+        numberFont.load();
         splashTA.load();
     }
 
