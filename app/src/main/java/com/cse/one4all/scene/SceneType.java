@@ -4,5 +4,6 @@ public enum SceneType {
     SPLASH,
     MENU,
     LOADING,
-    MINIGAME
+    MINIGAME,
+    MINIGAMEMENU
 }

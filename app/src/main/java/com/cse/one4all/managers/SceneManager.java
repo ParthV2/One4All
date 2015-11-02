@@ -2,6 +2,7 @@ package com.cse.one4all.managers;
 
 import com.cse.one4all.base.BaseScene;
 import com.cse.one4all.scene.MenuScene;
+import com.cse.one4all.scene.MinigameMenu;
 import com.cse.one4all.scene.SceneType;
 import com.cse.one4all.scene.SplashScene;
 
@@ -22,7 +23,7 @@ public class SceneManager {
 
     private SplashScene splashScene;
     private MenuScene menuScene;
-
+    private MinigameMenu minigameMenu;
 
     public void setScene(BaseScene scene){
         engine.setScene(scene);
@@ -49,9 +50,9 @@ public class SceneManager {
     }
 
     private void disposeSplashScene() {
-        ResourcesManager.getInstance().unloadSplashScreen();
-        splashScene.disposeScene();
-        splashScene = null;
+//        ResourcesManager.getInstance().unloadSplashScreen();
+//        splashScene.disposeScene();
+//        splashScene = null;
     }
 
     public void createMenuScene() {
@@ -62,6 +63,14 @@ public class SceneManager {
 
         SceneManager.getInstance().setScene(menuScene);
         disposeSplashScene();
+    }
+    public void createMinigameMenu() {
+        //ResourcesManager.getInstance().loadMenuResources();
+        //menuScene = new MenuScene();
+
+        minigameMenu = new MinigameMenu();
+
+        SceneManager.getInstance().setScene(minigameMenu);
     }
 
     public static SceneManager getInstance() {

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import com.cse.one4all.base.BaseScene;
 import com.cse.one4all.managers.MinigameManager;
 import com.cse.one4all.managers.ResourcesManager;
+import com.cse.one4all.managers.SceneManager;
 
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.ButtonSprite;
@@ -42,13 +43,13 @@ public class MenuScene extends BaseScene {
             @Override
             public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(ResourcesManager.getInstance().activity);
-                alert.setTitle("Game Code");
-                alert.setMessage("123456789");
-                alert.show();
-                Text message = new Text(550, 75,  ResourcesManager.getInstance().font, "You're a genius!!", vbom);
-                attachChild(message);
+                SceneManager.getInstance().createMinigameMenu();
+//                AlertDialog.Builder alert = new AlertDialog.Builder(ResourcesManager.getInstance().activity);
+//                alert.setTitle("Game Code");
+//                alert.setMessage("123456789");
+//                alert.show();
+//                Text message = new Text(550, 75,  ResourcesManager.getInstance().font, "You're a genius!!", vbom);
+//                attachChild(message);
 
                 return true;
             }
@@ -56,7 +57,7 @@ public class MenuScene extends BaseScene {
         attachChild(btnCode);
         registerTouchArea(btnCode);
 
-       /*Sprite btnExit = new Sprite(400, 100, ResourcesManager.getInstance().mBtnExitTexture,
+       Sprite btnExit = new Sprite(400, 100, ResourcesManager.getInstance().mBtnExitTexture,
                 ResourcesManager.getInstance().vbom)
         {
             @Override
@@ -70,7 +71,7 @@ public class MenuScene extends BaseScene {
         };
 
         attachChild(btnExit);
-        registerTouchArea(btnExit);*/
+        registerTouchArea(btnExit);
     }
 
     @Override
