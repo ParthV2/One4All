@@ -96,7 +96,7 @@ public class ResourcesManager {
         logoTexture = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(splashTA,activity, "Title2.png", 0, 64);
         backTexture = BitmapTextureAtlasTextureRegionFactory.
-                createFromAsset(splashTA,activity, "button.png", 0, 0);
+                createFromAsset(splashTA,activity, "buttonBack.png", 0, 0);
 
         final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
