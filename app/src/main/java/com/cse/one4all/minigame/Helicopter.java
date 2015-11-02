@@ -38,7 +38,7 @@ public class Helicopter extends BaseMinigame {
         {
             if (obstacleXPos[i] < -500) {
                 obstacleXPos[i] = 500;
-                obstacleYPos[i] = random.nextInt(600) - 300;
+                obstacleYPos[i] = RANDOM.nextInt(600) - 300;
             } else {
                 obstacleXPos[i] = obstacleXPos[i] + obstacleVel[i];
             }
@@ -87,7 +87,7 @@ public class Helicopter extends BaseMinigame {
         for (int i = 0; i < 4; i++)
         {
             obstacleXPos[i] = 450 + i*250;
-            obstacleYPos[i] = random.nextInt(600) - 300;
+            obstacleYPos[i] = RANDOM.nextInt(600) - 300;
             obstacleVel[i] = -10;
         }
 
