@@ -19,7 +19,8 @@ public class MinigameScene extends BaseScene {
             @Override
             public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
-                SceneManager.getInstance().createMinigameMenu();
+                ResourcesManager.getInstance().loadMenuResources();
+                SceneManager.getInstance().createMenuScene();
 
                 return true;
             }
