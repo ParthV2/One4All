@@ -13,6 +13,7 @@ import org.andengine.input.touch.TouchEvent;
  */
 
 public class Helicopter extends BaseMinigame {
+    private boolean localFail;
     private Text helicopter;
     private Text thrust;
     private Text[] obstacle = new Text[4];
@@ -58,14 +59,14 @@ public class Helicopter extends BaseMinigame {
     {
         //Death if you hit the bottom or the top
         if (heliYPos >= camera.getCenterY() || heliYPos <= camera.getCenterY() - 450) {
-            fail();
+            localFail = true;
         }
         //Death if you come within 10 units of the middle of an obstacle
         for (int i = 0; i < 4; i++)
         {
             if (heliXPos >= obstacleXPos[i] - 10 && heliXPos <= obstacleXPos[i] + 10 && heliYPos >= obstacleYPos[i] - 10 && heliYPos <= obstacleYPos[i] + 10)
             {
-                fail();
+                localFail = true;
             }
         }
     }
@@ -79,6 +80,7 @@ public class Helicopter extends BaseMinigame {
     public void onStart()
     {
         //Initial Value of variables
+        localFail = false;
         heliXPos = 0;
         heliYPos = 0;
         heliVel = 0;
@@ -102,9 +104,10 @@ public class Helicopter extends BaseMinigame {
                 checkDeath();
 
                 //If condition is met: exit loop, else continue loop.
-                if (completed)
+                if (localFail)
                 {
                     engine.unregisterUpdateHandler(pTimerHandler);
+                    fail();
                 } else {
                     pTimerHandler.reset();
                 }
