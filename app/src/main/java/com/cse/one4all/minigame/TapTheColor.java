@@ -34,9 +34,9 @@ public class TapTheColor extends BaseMinigame {
         engine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mCircle.setCurrentTileIndex((mCircle.getCurrentTileIndex() + 1) % 2);
-                currentTextName = RANDOM.nextInt(ColorNames.size());
+                currentTextName = random.nextInt(ColorNames.size());
                 mText.setText(ColorNames.get(currentTextName));
-                mText.setColor(Colors.get(RANDOM.nextInt(Colors.size())));
+                mText.setColor(Colors.get(random.nextInt(Colors.size())));
 
                 if(completed){
                     engine.unregisterUpdateHandler(pTimerHandler);
@@ -48,6 +48,11 @@ public class TapTheColor extends BaseMinigame {
     }
 
     @Override
+    public String getName() {
+        return "Tap The Color";
+    }
+
+    @Override
     public void createMinigameScene() {
 
         ColorNames.add("Red");
@@ -56,8 +61,7 @@ public class TapTheColor extends BaseMinigame {
         Colors.add(Color.RED);
         Colors.add(Color.BLUE);
 
-        mCircle = new TiledSprite(camera.getCenterX() - (mCircleTiledTextureRegion.getWidth() / 2), camera.getCenterY() -
-                (mCircleTiledTextureRegion.getHeight() / 2), mCircleTiledTextureRegion, scene.vbom)
+        mCircle = new TiledSprite(camera.getCenterX(), camera.getCenterY(), mCircleTiledTextureRegion, scene.vbom)
         {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
@@ -71,6 +75,7 @@ public class TapTheColor extends BaseMinigame {
         };
 
         mText = new Text(camera.getCenterX(), camera.getCenterY() + 64, ResourcesManager.getInstance().font, "RedBlue", scene.vbom);
+        mText.setText(ColorNames.get(currentTextName));
         mText.setColor(Color.BLUE);
 
         scene.attachChild(mCircle);

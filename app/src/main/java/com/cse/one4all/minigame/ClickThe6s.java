@@ -30,6 +30,11 @@ public class ClickThe6s extends BaseMinigame
     private ITextureRegion logo2Texture;
 
     @Override
+    public String getName() {
+        return "Click the 6s_OLD";
+    }
+
+    @Override
     public void createMinigameScene()
     {
         //scene.setBackground(new Background(Color.GREEN));

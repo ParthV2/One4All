@@ -38,7 +38,7 @@ public class Helicopter extends BaseMinigame {
         {
             if (obstacleXPos[i] < -500) {
                 obstacleXPos[i] = 500;
-                obstacleYPos[i] = RANDOM.nextInt(600) - 300;
+                obstacleYPos[i] = random.nextInt(600) - 300;
             } else {
                 obstacleXPos[i] = obstacleXPos[i] + obstacleVel[i];
             }
@@ -58,14 +58,14 @@ public class Helicopter extends BaseMinigame {
     {
         //Death if you hit the bottom or the top
         if (heliYPos >= camera.getCenterY() || heliYPos <= camera.getCenterY() - 450) {
-            complete();
+            fail();
         }
         //Death if you come within 10 units of the middle of an obstacle
         for (int i = 0; i < 4; i++)
         {
             if (heliXPos >= obstacleXPos[i] - 10 && heliXPos <= obstacleXPos[i] + 10 && heliYPos >= obstacleYPos[i] - 10 && heliYPos <= obstacleYPos[i] + 10)
             {
-                complete();
+                fail();
             }
         }
     }
@@ -87,7 +87,7 @@ public class Helicopter extends BaseMinigame {
         for (int i = 0; i < 4; i++)
         {
             obstacleXPos[i] = 450 + i*250;
-            obstacleYPos[i] = RANDOM.nextInt(600) - 300;
+            obstacleYPos[i] = random.nextInt(600) - 300;
             obstacleVel[i] = -10;
         }
 
@@ -110,6 +110,11 @@ public class Helicopter extends BaseMinigame {
                 }
             }
         }));
+    }
+
+    @Override
+    public String getName() {
+        return "Helicopter Game";
     }
 
     @Override

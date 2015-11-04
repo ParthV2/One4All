@@ -17,13 +17,18 @@ import org.andengine.util.adt.color.Color;
 public class SplashScene extends BaseScene {
 
     @Override
-    protected void createScene() {
+    public void createScene() {
         setBackground(new Background(Color.BLACK));
         Sprite logo = new Sprite(400, 240, ResourcesManager.getInstance().logoTexture, ResourcesManager.getInstance().vbom);
         attachChild(logo);
         //final Text text = new Text(400, 240, this.resourcesManager.font, "One 4 All", vbom);
         //text.setPosition(getX() - (text.getWidth() / 2f), getY() - (text.getHeight() / 2f));
         //attachChild(text);
+    }
+
+    @Override
+    public void populateScene() {
+
     }
 
     @Override

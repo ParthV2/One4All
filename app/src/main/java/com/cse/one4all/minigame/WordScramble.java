@@ -32,6 +32,12 @@ public class WordScramble extends BaseMinigame
     private ArrayList<Text> dashes = new ArrayList<Text>();
     private ArrayList<Text> dashes2 = new ArrayList<Text>();
     private int count = 0;
+
+    @Override
+    public String getName() {
+        return "Word Scramble";
+    }
+
     @Override
     public void createMinigameScene()
     {

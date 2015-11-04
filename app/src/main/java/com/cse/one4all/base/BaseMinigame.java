@@ -3,10 +3,12 @@ package com.cse.one4all.base;
 import com.cse.one4all.GameActivity;
 import com.cse.one4all.managers.MinigameManager;
 import com.cse.one4all.managers.ResourcesManager;
+import com.cse.one4all.managers.SceneManager;
 import com.cse.one4all.scene.MinigameScene;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+import org.andengine.entity.scene.Scene;
 
 import java.util.Random;
 
@@ -17,37 +19,34 @@ public abstract class BaseMinigame {
     protected final GameActivity activity = ResourcesManager.getInstance().activity;
     protected final Camera camera = ResourcesManager.getInstance().camera;
 
-    protected static final Random RANDOM = new Random();
+    protected static final Random random = new Random();
 
-    protected boolean completed = false;
+    public boolean completed = false;
+    public boolean success = false;
 
     public void complete(){
         completed = true;
-        scene.disposeScene();
-        disposeMinigameScene();
-
-        MinigameManager.getInstance().setRandomMinigame();
-    }
-
-    public void pass(){
-        scene.disposeScene();
-        MinigameManager.getInstance().setRandomMinigame();
+        success = true;
+        engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
+        SceneManager.getInstance().loadResultScene();
     }
 
     public void fail(){
-
+        completed = true;
+        success = false;
+        engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
+        SceneManager.getInstance().loadResultScene();
     }
 
-    public void createScene(){
-        completed = false;
-        scene = new MinigameScene();
-        scene.createScene();
-        createMinigameScene();
-    }
-
-    public BaseScene getScene() {
+    public Scene getScene() {
         return scene;
     }
+
+    public void setScene(BaseScene scene){
+        this.scene = scene;
+    }
+
+    public abstract String getName();
 
     public abstract void createMinigameScene();
 

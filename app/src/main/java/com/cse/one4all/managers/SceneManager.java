@@ -1,14 +1,17 @@
 package com.cse.one4all.managers;
 
 import com.cse.one4all.base.BaseScene;
-import com.cse.one4all.scene.MenuScene;
-import com.cse.one4all.scene.MinigameMenu;
+import com.cse.one4all.scene.LoadingScene;
+import com.cse.one4all.scene.MainMenuScene;
+import com.cse.one4all.scene.MinigameMenuScene;
+import com.cse.one4all.scene.MinigameScene;
+import com.cse.one4all.scene.ResultScene;
 import com.cse.one4all.scene.SceneType;
 import com.cse.one4all.scene.SplashScene;
 
 import org.andengine.engine.Engine;
-import org.andengine.entity.sprite.ButtonSprite;
-import org.andengine.input.touch.TouchEvent;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface.OnCreateSceneCallback;
 
 public class SceneManager {
@@ -21,14 +24,21 @@ public class SceneManager {
 
     private Engine engine = ResourcesManager.getInstance().engine;
 
-    private SplashScene splashScene;
-    private MenuScene menuScene;
-    private MinigameMenu minigameMenu;
+    public SplashScene splashScene;
+    public BaseScene mainMenuScene;
+    public MinigameScene minigameScene;
+    public BaseScene minigameMenuScene;
+    private BaseScene loadingScene;
+    public BaseScene resultScene;
+
 
     public void setScene(BaseScene scene){
         engine.setScene(scene);
+
         this.currentScene = scene;
         this.currentSceneType = scene.getSceneType();
+
+        scene.populateScene();
     }
 
     public void setScene(SceneType sceneType){
@@ -37,9 +47,79 @@ public class SceneManager {
                 setScene(splashScene);
                 break;
             case MENU:
-                setScene(menuScene);
+                setScene(mainMenuScene);
+                break;
+            case MINIGAME:
+                setScene(minigameScene);
+                break;
+            case MINIGAMEMENU:
+                setScene(minigameMenuScene);
+                break;
+            case RESULT:
+                setScene(resultScene);
                 break;
         }
+    }
+
+    //---------------------------------------------
+    // MENU
+    //---------------------------------------------
+
+
+    public void createMenuScene() {
+        ResourcesManager.getInstance().loadMenuResources();
+        ResourcesManager.getInstance().loadMinigameMenuResources();
+        mainMenuScene = new MainMenuScene();
+        minigameMenuScene = new MinigameMenuScene();
+        loadingScene = new LoadingScene();
+        SceneManager.getInstance().setScene(mainMenuScene);
+        disposeSplashScene();
+    }
+
+    public void loadMenuScene(final Engine mEngine) {
+        setScene(loadingScene);
+        minigameScene.disposeScene();
+        ResourcesManager.getInstance().unloadGameTextures();
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadMainMenuTextures();
+                setScene(mainMenuScene);
+            }
+        }));
+    }
+
+    public void loadGameScene(final Engine mEngine) {
+        setScene(loadingScene);
+        ResourcesManager.getInstance().unloadMainMenuTextures();
+        ResourcesManager.getInstance().unloadMinigameMenuTextures();
+
+        ResourcesManager.getInstance().loadGameResources();
+        minigameScene = new MinigameScene();
+        /*
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+
+            }
+        }));
+        */
+    }
+
+    public void loadResultScene(){
+        resultScene = new ResultScene();
+        setScene(resultScene);
+    }
+
+    public void createMinigameScene(){
+        minigameScene = new MinigameScene();
+
+        setScene(minigameScene);
+    }
+
+    public void disposeMinigameScene(){
+        minigameScene.disposeScene();
+        minigameScene = null;
     }
 
     public void createSplashScene(OnCreateSceneCallback pOnCreateSceneCallback) {
@@ -55,23 +135,6 @@ public class SceneManager {
 //        splashScene = null;
     }
 
-    public void createMenuScene() {
-        //ResourcesManager.getInstance().loadMenuResources();
-        //menuScene = new MenuScene();
-
-        menuScene = new MenuScene();
-
-        SceneManager.getInstance().setScene(menuScene);
-        disposeSplashScene();
-    }
-    public void createMinigameMenu() {
-        //ResourcesManager.getInstance().loadMenuResources();
-        //menuScene = new MenuScene();
-
-        minigameMenu = new MinigameMenu();
-
-        SceneManager.getInstance().setScene(minigameMenu);
-    }
 
     public static SceneManager getInstance() {
         return INSTANCE;
@@ -85,4 +148,5 @@ public class SceneManager {
     public SceneType getCurrentSceneType() {
         return currentSceneType;
     }
+
 }

@@ -14,6 +14,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
+import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
@@ -35,7 +36,7 @@ public class GameActivity extends BaseGameActivity {
     @Override
     public EngineOptions onCreateEngineOptions() {
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-        EngineOptions options = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+        EngineOptions options = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED,  new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
         options.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
         options.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
         return options;
@@ -66,12 +67,20 @@ public class GameActivity extends BaseGameActivity {
         mEngine.registerUpdateHandler(new TimerHandler(5f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadMenuResources();
                 SceneManager.getInstance().createMenuScene();
+
+                //ResourcesManager.getInstance().loadMenuResources();
+                //SceneManager.getInstance().createMenuScene();
                 MinigameManager.getInstance().init();
 
             }
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.exit(0);
     }
 }

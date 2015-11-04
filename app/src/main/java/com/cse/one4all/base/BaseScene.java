@@ -1,6 +1,7 @@
 package com.cse.one4all.base;
 
 import com.cse.one4all.GameActivity;
+import com.cse.one4all.managers.MinigameManager;
 import com.cse.one4all.managers.ResourcesManager;
 import com.cse.one4all.scene.SceneType;
 
@@ -27,11 +28,16 @@ public abstract class BaseScene extends Scene {
         createScene();
     }
 
-    protected abstract void createScene();
+
+    public abstract void createScene();
+
+    public abstract void populateScene();
 
     public abstract void onBackKeyPressed();
 
     public abstract SceneType getSceneType();
 
     public abstract void disposeScene();
+
+
 }

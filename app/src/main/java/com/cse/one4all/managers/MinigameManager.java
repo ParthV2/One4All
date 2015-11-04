@@ -5,9 +5,10 @@ import com.cse.one4all.minigame.ClickThe6Improved;
 import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.Helicopter;
 import com.cse.one4all.minigame.TapTheColor;
-import com.cse.one4all.minigame.TestMinigame;
 import com.cse.one4all.minigame.WordScramble;
+import com.cse.one4all.scene.SceneType;
 
+import org.andengine.entity.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,20 +20,50 @@ public class MinigameManager {
 
     private Random random = new Random();
     private List<BaseMinigame> minigames = new ArrayList<>();
-    private BaseMinigame currentMinigame;
+    public BaseMinigame currentMinigame;
+
+    private boolean isSinglePlayer;
+    private boolean started = false;
+
+    public static final int TIMER_SECONDS = 15;
+
 
     public MinigameManager(){
 
     }
 
-    public void setRandomMinigame(){
-        setMinigame(getRandomMinigame());
+    public void startGame(){
+
     }
 
-    public void setMinigame(BaseMinigame minigame){
-        minigame.createScene();
+    public void startCountdown(){
+
+    }
+
+    public void setRandomMinigame(){
+        startMinigame(getRandomMinigame(), false);
+    }
+
+    public BaseMinigame startMinigame(String name){
+        for(BaseMinigame m : minigames){
+            if(name.equalsIgnoreCase(m.getName())){
+                startMinigame(m, true);
+                return m;
+            }
+        }
+        return null;
+    }
+
+    public void startMinigame(BaseMinigame minigame, boolean isSinglePlayer){
+        this.isSinglePlayer = isSinglePlayer;
+
+        minigame.setScene(SceneManager.getInstance().minigameScene);
+        minigame.createMinigameScene();
+
         currentMinigame = minigame;
-        SceneManager.getInstance().setScene(minigame.getScene());
+
+        SceneManager.getInstance().setScene(SceneType.MINIGAME);
+
         minigame.onStart();
     }
 
@@ -51,13 +82,10 @@ public class MinigameManager {
     }
 
     public void init(){
-        minigames.add(new TestMinigame());
         minigames.add(new TapTheColor());
-        minigames.add(new ClickThe6s());
-        minigames.add(new WordScramble());
+        minigames.add(new ClickThe6Improved());
+        //minigames.add(new WordScramble());
         minigames.add(new Helicopter());
-
-        loadResources();
     }
 
     public static MinigameManager getInstance(){
@@ -65,4 +93,7 @@ public class MinigameManager {
     }
 
 
+    public boolean isSinglePlayer() {
+        return isSinglePlayer;
+    }
 }

@@ -27,22 +27,30 @@ public class ClickThe6Improved extends BaseMinigame {
     private List<Text> numbers = new ArrayList<>();
 
     private static final int ROWS = 3;
-    private static final int COLUMNS = 6;
-    private static final int SIX_COUNT = 5;
+    private static final int COLUMNS = 12;
+    private static final int SIX_COUNT = 6;
 
     private static final int START_X = 200;
     private static final int START_Y = 100;
-    private static final int PADDING_X = 0;
+    private static final int PADDING_X = 5;
     private static final int PADDING_Y = 0;
 
     private int sixClicked = 0;
 
     @Override
-    public void createMinigameScene() {
+    public String getName() {
+        return "Click The 6's";
+    }
 
+    @Override
+    public void createMinigameScene() {
+        sixClicked = 0;
         List<Integer> numPos = new ArrayList<Integer>(SIX_COUNT);
         for(int i = 0; i < SIX_COUNT; i++){
-            int pos = RANDOM.nextInt(ROWS * COLUMNS);
+            int pos;
+            do {
+                pos = random.nextInt((ROWS * COLUMNS));
+            } while(numPos.contains(pos));
             numPos.add(pos);
         }
 
@@ -58,20 +66,16 @@ public class ClickThe6Improved extends BaseMinigame {
                 Text text = new Text(0, 0, ResourcesManager.getInstance().numberFont, number, scene.vbom){
                     @Override
                     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                        if(pSceneTouchEvent.isActionDown() == false){
-                            return true;
-                        }
+                        if(pSceneTouchEvent.isActionDown()){
+                            if (this.getText() == "6") {
+                                this.setText("9");
+                                sixClicked++;
+                            }
 
-                        if (this.getText() == "6") {
-                            this.setText("9");
-                            sixClicked++;
-                            this.setPosition(this.getX(), this.getY() + 20);
+                            if(sixClicked >= SIX_COUNT){
+                                complete();
+                            }
                         }
-
-                        if(sixClicked == SIX_COUNT){
-                            pass();
-                        }
-
                         return true;
                     }
                 };
@@ -82,13 +86,13 @@ public class ClickThe6Improved extends BaseMinigame {
 
                     //xPos = camera.getCenterX() - (fullTextWidth / 2);
                     //yPos = camera.getCenterY() - (fullTextHeight / 2);
-                    xPos = 0;
-                    yPos = 0;
+                    xPos = 100;
+                    yPos = 25;
 
                 }
 
                 text.setAnchorCenter(0, 0);
-                text.setPosition(xPos + (xIndex * (PADDING_X + text.getWidth())), yPos + (yIndex * (PADDING_Y + 70 - (text.getText() == "6" ? 20 : 0))));
+                text.setPosition(xPos + (xIndex * (PADDING_X + text.getWidth())), yPos + (yIndex * (PADDING_Y + text.getHeight())));
 
                 numbers.add(text);
 
