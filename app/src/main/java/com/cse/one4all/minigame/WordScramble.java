@@ -44,161 +44,168 @@ public class WordScramble extends BaseMinigame
         float positionX = 200;
         for(int i = 0; i < 6; i++)
         {
-            dashes.add(new Text(positionX, 320, gameFont, "__", scene.vbom));
+            dashes.add(new Text(positionX, 250, gameFont, "__", scene.vbom));
             scene.attachChild(dashes.get(i));
             positionX+=75;
         }
         positionX = 200;
         for(int i = 0; i < 6; i++)
         {
-            dashes2.add(new Text(positionX, 200, gameFont, "__", scene.vbom));
+            dashes2.add(new Text(positionX, 150, gameFont, "__", scene.vbom));
             scene.attachChild(dashes2.get(i));
             positionX+=75;
         }
-        letterW = new Letter(275, 325, gameFont, "W", scene.vbom)
+
+        letterW = new Letter(275, 255, gameFont, "W", scene.vbom)
         {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
+
                 count++;
                 if(count == 1)
                 {
-                    letterW.setPosition(200,205);
+                    letterW.setPosition(200,155);
                 }
                 else if(count == 2)
                 {
-                    letterW.setPosition(275,205);
+                    letterW.setPosition(275,155);
                 }
                 else if(count == 3)
                 {
-                    letterW.setPosition(350,205);
+                    letterW.setPosition(350,155);
                 }
                 else if(count == 4)
                 {
-                    letterW.setPosition(425,205);
+                    letterW.setPosition(425,155);
                 }
                 else if(count == 5)
                 {
-                    letterW.setPosition(500,205);
+                    letterW.setPosition(500,155);
                 }
                 else if(count == 6)
                 {
-                    letterW.setPosition(575,205);
+                    letterW.setPosition(575,155);
                 }
                 return true;
             }
         };
         scene.attachChild(letterW);
         scene.registerTouchArea(letterW);
-        letterI = new Letter(200, 325, gameFont, "I", scene.vbom)
+        letterI = new Letter(200, 255, gameFont, "I", scene.vbom)
         {
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
+
                 count++;
                 if (count == 1) {
-                    letterI.setPosition(200, 205);
+                    letterI.setPosition(200, 155);
                 } else if (count == 2) {
-                    letterI.setPosition(275, 205);
+                    letterI.setPosition(275, 155);
                 } else if (count == 3) {
-                    letterI.setPosition(350, 205);
+                    letterI.setPosition(350, 155);
                 } else if (count == 4) {
-                    letterI.setPosition(425, 205);
+                    letterI.setPosition(425, 155);
                 } else if (count == 5) {
-                    letterI.setPosition(500, 205);
+                    letterI.setPosition(500, 155);
                 } else if (count == 6) {
-                    letterI.setPosition(575, 205);
+                    letterI.setPosition(575, 155);
                 }
                 return true;
             }
     };
         scene.attachChild(letterI);
         scene.registerTouchArea(letterI);
-        letterN1 = new Letter(425, 325, gameFont, "N", scene.vbom)
+        letterN1 = new Letter(425, 255, gameFont, "N", scene.vbom)
         {
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
+
                 count++;
                 if (count == 1) {
-                    letterN1.setPosition(200, 205);
+                    letterN1.setPosition(200, 155);
                 } else if (count == 2) {
-                    letterN1.setPosition(275, 205);
+                    letterN1.setPosition(275, 155);
                 } else if (count == 3) {
-                    letterN1.setPosition(350, 205);
+                    letterN1.setPosition(350, 155);
                 } else if (count == 4) {
-                    letterN1.setPosition(425, 205);
+                    letterN1.setPosition(425, 155);
                 } else if (count == 5) {
-                    letterN1.setPosition(500, 205);
+                    letterN1.setPosition(500, 155);
                 } else if (count == 6) {
-                    letterN1.setPosition(575, 205);
+                    letterN1.setPosition(575, 155);
                 }
                 return true;
             }
         };
         scene.attachChild(letterN1);
         scene.registerTouchArea(letterN1);
-        letterN2 = new Letter(575, 325, gameFont, "N", scene.vbom)
+
+        letterN2 = new Letter(575, 255, gameFont, "N", scene.vbom)
         {
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
+
                 count++;
                 if (count == 1) {
-                    letterN2.setPosition(200, 205);
+                    letterN2.setPosition(200, 155);
                 } else if (count == 2) {
-                    letterN2.setPosition(275, 205);
+                    letterN2.setPosition(275, 155);
                 } else if (count == 3) {
-                    letterN2.setPosition(350, 205);
+                    letterN2.setPosition(350, 155);
                 } else if (count == 4) {
-                    letterN2.setPosition(425, 205);
+                    letterN2.setPosition(425, 155);
                 } else if (count == 5) {
-                    letterN2.setPosition(500, 205);
+                    letterN2.setPosition(500, 155);
                 } else if (count == 6) {
-                    letterN2.setPosition(575, 205);
+                    letterN2.setPosition(575, 155);
                 }
                 return true;
             }
         };
         scene.attachChild(letterN2);
         scene.registerTouchArea(letterN2);
-        letterE = new Letter(350, 325, gameFont, "E", scene.vbom)
+        letterE = new Letter(350, 255, gameFont, "E", scene.vbom)
         {
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
+
                 count++;
                 if (count == 1) {
-                    letterE.setPosition(200, 205);
+                    letterE.setPosition(200, 155);
                 } else if (count == 2) {
-                    letterE.setPosition(275, 205);
+                    letterE.setPosition(275, 155);
                 } else if (count == 3) {
-                    letterE.setPosition(350, 205);
+                    letterE.setPosition(350, 155);
                 } else if (count == 4) {
-                    letterE.setPosition(425, 205);
+                    letterE.setPosition(425, 155);
                 } else if (count == 5) {
-                    letterE.setPosition(500, 205);
+                    letterE.setPosition(500, 155);
                 } else if (count == 6) {
-                    letterE.setPosition(575, 205);
+                    letterE.setPosition(575, 155);
                 }
                 return true;
             }
         };
         scene.attachChild(letterE);
         scene.registerTouchArea(letterE);
-        letterR = new Letter(500, 325, gameFont, "R", scene.vbom)
+        letterR = new Letter(500, 255, gameFont, "R", scene.vbom)
         {
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
                 count++;
                 if (count == 1) {
-                    letterR.setPosition(200, 205);
+                    letterR.setPosition(200, 155);
                 } else if (count == 2) {
-                    letterR.setPosition(275, 205);
+                    letterR.setPosition(275, 155);
                 } else if (count == 3) {
-                    letterR.setPosition(350, 205);
+                    letterR.setPosition(350, 155);
                 } else if (count == 4) {
-                    letterR.setPosition(425, 205);
+                    letterR.setPosition(425, 155);
                 } else if (count == 5) {
-                    letterR.setPosition(500, 205);
+                    letterR.setPosition(500, 155);
                 } else if (count == 6) {
-                    letterR.setPosition(575, 205);
+                    letterR.setPosition(575, 155);
                 }
                 return true;
             }
@@ -210,12 +217,12 @@ public class WordScramble extends BaseMinigame
             @Override
             public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
-                letterW.setPosition(275, 325);
-                letterI.setPosition(200, 325);
-                letterN1.setPosition(425, 325);
-                letterN2.setPosition(575, 325);
-                letterE.setPosition(500, 325);
-                letterR.setPosition(350, 325);
+                letterW.setPosition(275, 255);
+                letterI.setPosition(200, 255);
+                letterN1.setPosition(425, 255);
+                letterN2.setPosition(575, 255);
+                letterE.setPosition(350, 255);
+                letterR.setPosition(500, 255);
                 count = 0;
 
                 return true;

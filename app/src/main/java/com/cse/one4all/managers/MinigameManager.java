@@ -4,6 +4,7 @@ import com.cse.one4all.base.BaseMinigame;
 import com.cse.one4all.minigame.ClickThe6Improved;
 import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.Helicopter;
+import com.cse.one4all.minigame.MathGame;
 import com.cse.one4all.minigame.TapTheColor;
 import com.cse.one4all.minigame.WordScramble;
 import com.cse.one4all.scene.SceneType;
