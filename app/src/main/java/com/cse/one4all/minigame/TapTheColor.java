@@ -33,7 +33,7 @@ public class TapTheColor extends BaseMinigame {
     public void onStart() {
         engine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
-                mCircle.setCurrentTileIndex((mCircle.getCurrentTileIndex() + 1) % 2);
+                mCircle.setCurrentTileIndex(random.nextInt(4));
                 currentTextName = random.nextInt(ColorNames.size());
                 mText.setText(ColorNames.get(currentTextName));
                 mText.setColor(Colors.get(random.nextInt(Colors.size())));
@@ -57,9 +57,13 @@ public class TapTheColor extends BaseMinigame {
 
         ColorNames.add("Red");
         ColorNames.add("Blue");
+        ColorNames.add("Green");
+        ColorNames.add("Yellow");
 
         Colors.add(Color.RED);
         Colors.add(Color.BLUE);
+        Colors.add(Color.GREEN);
+        Colors.add(Color.YELLOW);
 
         mCircle = new TiledSprite(camera.getCenterX(), camera.getCenterY(), mCircleTiledTextureRegion, scene.vbom)
         {
@@ -74,7 +78,7 @@ public class TapTheColor extends BaseMinigame {
             }
         };
 
-        mText = new Text(camera.getCenterX(), camera.getCenterY() + 64, ResourcesManager.getInstance().font, "RedBlue", scene.vbom);
+        mText = new Text(camera.getCenterX(), camera.getCenterY() + 128, ResourcesManager.getInstance().font, "RedBlue", scene.vbom);
         mText.setText(ColorNames.get(currentTextName));
         mText.setColor(Color.BLUE);
 
@@ -93,8 +97,8 @@ public class TapTheColor extends BaseMinigame {
     @Override
     public void loadResources() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        mTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 128, 128, TextureOptions.BILINEAR);
-        mCircleTiledTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mTextureAtlas, activity, "circles_64.png", 0, 0, 2, 1);
+        mTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+        mCircleTiledTextureRegion = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mTextureAtlas, activity, "circles128.png", 0, 0, 4, 1);
         mTextureAtlas.load();
     }
 
