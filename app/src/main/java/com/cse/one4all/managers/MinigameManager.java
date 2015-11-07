@@ -85,8 +85,10 @@ public class MinigameManager {
     public void init(){
         minigames.add(new TapTheColor());
         minigames.add(new ClickThe6Improved());
-        //minigames.add(new WordScramble());
+//        minigames.add(new WordScramble());
         minigames.add(new Helicopter());
+        minigames.add(new MathGame());
+
     }
 
     public static MinigameManager getInstance(){
