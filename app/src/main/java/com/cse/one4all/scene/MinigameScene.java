@@ -36,7 +36,7 @@ public class MinigameScene extends BaseScene {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 if (timeLeft <= 0) {
-                    MinigameManager.getInstance().currentMinigame.fail();
+                    MinigameManager.getInstance().endCurrentMinigame();
                     engine.unregisterUpdateHandler(pTimerHandler);
                 } else {
                     timeLeft--;

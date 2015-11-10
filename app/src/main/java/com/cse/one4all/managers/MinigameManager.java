@@ -72,6 +72,10 @@ public class MinigameManager {
         return null;
     }
 
+    public void endCurrentMinigame() {
+        endMinigame(currentMinigame, currentMinigame.success);
+    }
+
     public void endMinigame(final BaseMinigame minigame, boolean success){
         minigame.getMinigame().detachSelf();
         minigame.resetMinigame();
