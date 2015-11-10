@@ -5,18 +5,29 @@ import com.cse.one4all.managers.ResourcesManager;
 
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 
 /**
  * Created by Cole on 10/26/2015.
  */
 
 public class Helicopter extends BaseMinigame {
+
+    public BitmapTextureAtlas gameTA;
+    private ITextureRegion heliTexture;
+    private ITextureRegion obstacleTexture;
+    private ITextureRegion thrustTexture;
+
     private boolean localFail;
-    private Text helicopter;
-    private Text thrust;
-    private Text[] obstacle = new Text[4];
+    private Sprite helicopter;
+    private Sprite thrust;
+    private Sprite[] obstacle = new Sprite[4];
 
     private float heliXPos;
     private float heliYPos;
@@ -124,7 +135,7 @@ public class Helicopter extends BaseMinigame {
     public void createMinigameScene()
     {
         //When clicked applies thrust to the Helicopter, in the form of increasing the Helicopter's Velocity
-        thrust = new Text(camera.getCenterX() - 200, camera.getCenterY(), ResourcesManager.getInstance().font, "Thrust", scene.vbom)
+        thrust = new Sprite(camera.getCenterX() - 200, camera.getCenterY(), thrustTexture, scene.vbom)
         {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
@@ -135,15 +146,16 @@ public class Helicopter extends BaseMinigame {
         };
 
         //Object Images
-        helicopter = new Text(camera.getCenterX() + heliXPos, camera.getCenterY() + heliYPos, ResourcesManager.getInstance().font, "H", scene.vbom);
+//        helicopter = new Text(camera.getCenterX() + heliXPos, camera.getCenterY() + heliYPos, ResourcesManager.getInstance().font, "H", scene.vbom);
+        helicopter = new Sprite(camera.getCenterX() + heliXPos, camera.getCenterY() + heliYPos, heliTexture, scene.vbom);
         for (int i = 0; i < 4; i++)
         {
-            obstacle[i] = new Text(camera.getCenterX() + obstacleXPos[i], camera.getCenterY() + obstacleYPos[i], ResourcesManager.getInstance().font, "" + i + "", scene.vbom);
-            scene.attachChild(obstacle[i]);
+            obstacle[i] = new Sprite(camera.getCenterX() + obstacleXPos[i], camera.getCenterY() + obstacleYPos[i], obstacleTexture, scene.vbom);
+            minigame.attachChild(obstacle[i]);
         }
 
-        scene.attachChild(helicopter);
-        scene.attachChild(thrust);
+        minigame.attachChild(helicopter);
+        minigame.attachChild(thrust);
         scene.registerTouchArea(thrust);
     }
 
@@ -157,13 +169,26 @@ public class Helicopter extends BaseMinigame {
     @Override
     public void loadResources()
     {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        gameTA = new BitmapTextureAtlas(activity.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+
+        heliTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(gameTA,activity, "helicopter.png", 0, 0);
+
+        obstacleTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(gameTA,activity, "rock1.png", 0, 256);
+
+        thrustTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(gameTA,activity, "buttonFly.png", 256, 0);
+
+        gameTA.load();
 
     }
 
     @Override
     public void unloadResources()
     {
-
+        gameTA.unload();
     }
 
     @Override
