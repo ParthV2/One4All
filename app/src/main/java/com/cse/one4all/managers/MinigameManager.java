@@ -27,7 +27,7 @@ public class MinigameManager {
     private VertexBufferObjectManager vbom = ResourcesManager.getInstance().vbom;
 
     private Random random = new Random();
-    private List<BaseMinigame> minigames = new ArrayList<>();
+    public List<BaseMinigame> minigames = new ArrayList<>();
     public BaseMinigame currentMinigame;
 
     private boolean isSinglePlayer;
