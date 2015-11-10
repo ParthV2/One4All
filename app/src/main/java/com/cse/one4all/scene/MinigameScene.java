@@ -18,9 +18,12 @@ import org.andengine.util.adt.align.HorizontalAlign;
 public class MinigameScene extends BaseScene {
 
     private Text timerText;
+    private Text p1LivesText, p2LivesText, p3LivesText, p4LivesText;
+    private int p1LivesLeft, p2LivesLeft, p3LivesLeft, p4LivesLeft;
     public int timeLeft;
 
     private HUD minigameHUD;
+    private Sprite back;
     public TimerHandler handler;
 
     @Override
@@ -35,6 +38,7 @@ public class MinigameScene extends BaseScene {
         handler = new TimerHandler(1f, true, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
+
                 if (timeLeft <= 0) {
                     MinigameManager.getInstance().currentMinigame.fail();
                     engine.unregisterUpdateHandler(pTimerHandler);
@@ -45,6 +49,7 @@ public class MinigameScene extends BaseScene {
             }
         });
         engine.registerUpdateHandler(handler);
+
     }
 
 
@@ -62,7 +67,7 @@ public class MinigameScene extends BaseScene {
     @Override
     public void disposeScene() {
         camera.setHUD(null);
-        camera.setCenter(400, 240);
+        camera.setCenter(400,240);
     }
 
     private void createHUD(){
@@ -76,6 +81,36 @@ public class MinigameScene extends BaseScene {
 
         minigameHUD.attachChild(timerText);
 
+        p1LivesLeft = 10;
+        p1LivesText = new Text(0, 0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p1LivesText.setText(p1LivesLeft + "");
+        p1LivesText.setAnchorCenter(0, 0);
+        p1LivesText.setPosition(camera.getCenterX() - (p1LivesText.getWidth() / 2), camera.getHeight() - p1LivesText.getHeight());
+        minigameHUD.attachChild(p1LivesText);
+        camera.setHUD(minigameHUD);
+
+        p2LivesLeft = 10;
+        p2LivesText = new Text(0, 0, resourcesManager.p2LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p2LivesText.setText(p2LivesLeft + "");
+        p2LivesText.setAnchorCenter(0, 0);
+        p2LivesText.setPosition((camera.getCenterX() - (p2LivesText.getWidth()/2)-20), camera.getYMin()+3);
+        minigameHUD.attachChild(p2LivesText);
+        camera.setHUD(minigameHUD);
+
+        p3LivesLeft = 10;
+        p3LivesText = new Text(0, 0, resourcesManager.p3LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p3LivesText.setText(p3LivesLeft + "");
+        p3LivesText.setAnchorCenter(0, 0);
+        p3LivesText.setPosition(camera.getCenterX() - (p3LivesText.getWidth()/2), camera.getYMin()+3);
+        minigameHUD.attachChild(p3LivesText);
+        camera.setHUD(minigameHUD);
+
+        p4LivesLeft = 10;
+        p4LivesText = new Text(0, 0, resourcesManager.p4LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p4LivesText.setText(p4LivesLeft + "");
+        p4LivesText.setAnchorCenter(0, 0);
+        p4LivesText.setPosition((camera.getCenterX() - (p4LivesText.getWidth()/2)+20), camera.getYMin()+3);
+        minigameHUD.attachChild(p4LivesText);
         camera.setHUD(minigameHUD);
     }
 }

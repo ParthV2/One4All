@@ -31,7 +31,7 @@ public class ResourcesManager {
     public BitmapTextureAtlas splashTA, minigameMenuTA;
     public ITextureRegion mBtnPlayTexture, mBtnExitTexture, logoTexture, logoTexture2, mBtnCodeTexture, backTexture, logo2Texture;
 
-    public Font font, menuFont, numberFont;
+    public Font font, menuFont, numberFont, p1LivesFont, p2LivesFont, p3LivesFont, p4LivesFont;
 
     public BuildableBitmapTextureAtlas menuTextureAtlas;
 
@@ -108,6 +108,34 @@ public class ResourcesManager {
         numberFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture2, activity.getAssets(),
                 "LeagueGothic-Regular.otf", 128, true, Color.WHITE);
         numberFont.load();
+
+        final ITexture mainFontTexture3 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+        p1LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture3, activity.getAssets(),
+                "LeagueGothic-Regular.otf", 25, true, Color.CYAN);
+        p1LivesFont.load();
+
+        final ITexture mainFontTexture4 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+        p2LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture4, activity.getAssets(),
+                "LeagueGothic-Regular.otf", 25, true, Color.RED);
+        p2LivesFont.load();
+
+        final ITexture mainFontTexture5 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+        p3LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture5, activity.getAssets(),
+                "LeagueGothic-Regular.otf", 25, true, Color.YELLOW);
+        p3LivesFont.load();
+
+        final ITexture mainFontTexture6 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+        p4LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture6, activity.getAssets(),
+                "LeagueGothic-Regular.otf", 25, true, Color.rgb(0,255,0));
+        p4LivesFont.load();
     }
 
     public void loadMainMenuTextures() {
