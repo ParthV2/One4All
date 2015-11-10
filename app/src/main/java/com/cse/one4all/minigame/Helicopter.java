@@ -166,4 +166,9 @@ public class Helicopter extends BaseMinigame {
 
     }
 
+    @Override
+    public void onFinish() {
+
+    }
+
 }

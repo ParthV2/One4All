@@ -4,15 +4,8 @@ import com.cse.one4all.base.BaseScene;
 import com.cse.one4all.managers.MinigameManager;
 import com.cse.one4all.managers.ResourcesManager;
 import com.cse.one4all.managers.SceneManager;
-import com.cse.one4all.minigame.ClickThe6Improved;
-import com.cse.one4all.minigame.TapTheColor;
-import com.cse.one4all.minigame.WordScramble;
 
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.scene.menu.MenuScene;
-import org.andengine.entity.scene.menu.item.IMenuItem;
-import org.andengine.entity.scene.menu.item.SpriteMenuItem;
-import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;

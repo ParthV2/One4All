@@ -29,9 +29,11 @@ public class TapTheColor extends BaseMinigame {
     private static final List<String> ColorNames = new ArrayList<>();
     private static final List<Integer> Colors = new ArrayList<>();
 
+    private TimerHandler timer;
+
     @Override
     public void onStart() {
-        engine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
+        timer = new TimerHandler(2f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mCircle.setCurrentTileIndex(random.nextInt(4));
                 currentTextName = random.nextInt(ColorNames.size());
@@ -44,7 +46,8 @@ public class TapTheColor extends BaseMinigame {
                     pTimerHandler.reset();
                 }
             }
-        }));
+        });
+        engine.registerUpdateHandler(timer);
     }
 
     @Override
@@ -70,6 +73,10 @@ public class TapTheColor extends BaseMinigame {
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
             {
+                if(pSceneTouchEvent.isActionDown() == false){
+                    return false;
+                }
+
                 if(currentTextName == mCircle.getCurrentTileIndex())
                 {
                     complete();
@@ -78,12 +85,12 @@ public class TapTheColor extends BaseMinigame {
             }
         };
 
-        mText = new Text(camera.getCenterX(), camera.getCenterY() + 128, ResourcesManager.getInstance().font, "RedBlue", scene.vbom);
+        mText = new Text(camera.getCenterX(), camera.getCenterY() + 128, ResourcesManager.getInstance().font, "RedBlueGreenYellow", scene.vbom);
         mText.setText(ColorNames.get(currentTextName));
         mText.setColor(Color.BLUE);
 
-        scene.attachChild(mCircle);
-        scene.attachChild(mText);
+        minigame.attachChild(mCircle);
+        minigame.attachChild(mText);
 
 
         scene.registerTouchArea(mCircle);
@@ -91,7 +98,11 @@ public class TapTheColor extends BaseMinigame {
 
     @Override
     public void disposeMinigameScene() {
-        scene.disposeScene();
+        engine.unregisterUpdateHandler(timer);
+        scene.unregisterTouchArea(mCircle);
+
+        mCircle = null;
+        mText = null;
     }
 
     @Override
@@ -106,6 +117,11 @@ public class TapTheColor extends BaseMinigame {
     public void unloadResources() {
         mTextureAtlas.unload();
         mCircleTiledTextureRegion = null;
+    }
+
+    @Override
+    public void onFinish() {
+
     }
 
 

@@ -30,7 +30,7 @@ public class ResultScene extends BaseScene {
 
                 } else {
                     SceneManager.getInstance().createMinigameScene();
-                    MinigameManager.getInstance().setRandomMinigame();
+                    //MinigameManager.getInstance().setRandomMinigame();
                 }
             }
         }));

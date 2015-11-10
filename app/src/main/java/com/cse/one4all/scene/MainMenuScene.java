@@ -58,8 +58,7 @@ public class MainMenuScene extends BaseScene implements MenuScene.IOnMenuItemCli
     public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
         switch(pMenuItem.getID()) {
             case MENU_PLAY:
-                SceneManager.getInstance().loadGameScene(engine);
-                MinigameManager.getInstance().setRandomMinigame();
+                MinigameManager.getInstance().startGame();
                 return true;
             case MENU_SINGLE_PLAYER:
                 SceneManager.getInstance().setScene(SceneType.MINIGAMEMENU);

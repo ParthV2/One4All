@@ -1,15 +1,18 @@
 package com.cse.one4all.managers;
 
 import com.cse.one4all.base.BaseMinigame;
-import com.cse.one4all.minigame.ClickThe6Improved;
 import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.Helicopter;
 import com.cse.one4all.minigame.MathGame;
 import com.cse.one4all.minigame.TapTheColor;
-import com.cse.one4all.minigame.WordScramble;
 import com.cse.one4all.scene.SceneType;
 
-import org.andengine.entity.scene.Scene;
+import org.andengine.engine.Engine;
+import org.andengine.engine.camera.Camera;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.text.Text;
+import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,10 @@ import java.util.Random;
 public class MinigameManager {
 
     private static final MinigameManager INSTANCE = new MinigameManager();
+
+    private Engine engine = ResourcesManager.getInstance().engine;
+    private Camera camera = ResourcesManager.getInstance().camera;
+    private VertexBufferObjectManager vbom = ResourcesManager.getInstance().vbom;
 
     private Random random = new Random();
     private List<BaseMinigame> minigames = new ArrayList<>();
@@ -28,20 +35,30 @@ public class MinigameManager {
 
     public static final int TIMER_SECONDS = 15;
 
-
-    public MinigameManager(){
-
-    }
-
     public void startGame(){
-
+        started = true;
+        SceneManager.getInstance().loadGameScene(engine);
+        startRandomMinigame();
     }
 
-    public void startCountdown(){
+    public void endGame(){
+        started = false;
+        SceneManager.getInstance().loadMenuScene(engine);
 
+        if(currentMinigame != null){
+            currentMinigame.getMinigame().detachSelf();
+            currentMinigame.resetMinigame();
+
+            currentMinigame.disposeMinigameScene();
+            currentMinigame.onFinish();
+            currentMinigame.unloadResources();
+        }
+
+        ResourcesManager.getInstance().engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
     }
 
-    public void setRandomMinigame(){
+
+    public void startRandomMinigame(){
         startMinigame(getRandomMinigame(), false);
     }
 
@@ -55,17 +72,57 @@ public class MinigameManager {
         return null;
     }
 
-    public void startMinigame(BaseMinigame minigame, boolean isSinglePlayer){
-        this.isSinglePlayer = isSinglePlayer;
+    public void endMinigame(final BaseMinigame minigame, boolean success){
+        minigame.getMinigame().detachSelf();
+        minigame.resetMinigame();
 
-        minigame.setScene(SceneManager.getInstance().minigameScene);
-        minigame.createMinigameScene();
+        minigame.disposeMinigameScene();
+        minigame.onFinish();
+        minigame.unloadResources();
+
+        ResourcesManager.getInstance().engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
+        final Text result = new Text(camera.getCenterX(), camera.getCenterY(),
+                ResourcesManager.getInstance().font, success ? "Completed!" : "Failed!", vbom);
+
+        SceneManager.getInstance().minigameScene.attachChild(result);
+
+        ResourcesManager.getInstance().engine.registerUpdateHandler(new TimerHandler(3f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                result.detachSelf();
+
+                if(isSinglePlayer){
+                    SceneManager.getInstance().loadMenuScene(engine);
+                } else {
+                    startRandomMinigame();
+
+                    SceneManager.getInstance().minigameScene.timeLeft = TIMER_SECONDS;
+                    SceneManager.getInstance().minigameScene.populateScene();
+                }
+
+            }
+        }));
+    }
+
+    public void startMinigame(final BaseMinigame minigame, boolean isSinglePlayer){
+        this.isSinglePlayer = isSinglePlayer;
 
         currentMinigame = minigame;
 
-        SceneManager.getInstance().setScene(SceneType.MINIGAME);
+        minigame.resetMinigame();
+        minigame.loadResources();
 
-        minigame.onStart();
+        ResourcesManager.getInstance().engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            @Override
+            public void onTimePassed(TimerHandler pTimerHandler) {
+                ResourcesManager.getInstance().engine.unregisterUpdateHandler(pTimerHandler);
+
+                minigame.createMinigameScene();
+                SceneManager.getInstance().minigameScene.attachChild(minigame.getMinigame());
+                minigame.onStart();
+            }
+        }));
     }
 
     public BaseMinigame getRandomMinigame(){
@@ -84,10 +141,10 @@ public class MinigameManager {
 
     public void init(){
         minigames.add(new TapTheColor());
-        minigames.add(new ClickThe6Improved());
+        minigames.add(new ClickThe6s());
 //        minigames.add(new WordScramble());
-        minigames.add(new Helicopter());
-        minigames.add(new MathGame());
+//        minigames.add(new Helicopter());
+//        minigames.add(new MathGame());
 
     }
 

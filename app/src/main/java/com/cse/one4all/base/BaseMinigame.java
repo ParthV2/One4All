@@ -8,13 +8,16 @@ import com.cse.one4all.scene.MinigameScene;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 
 import java.util.Random;
 
 public abstract class BaseMinigame {
 
+    protected Entity minigame;
     protected BaseScene scene;
+
     protected final Engine engine = ResourcesManager.getInstance().engine;
     protected final GameActivity activity = ResourcesManager.getInstance().activity;
     protected final Camera camera = ResourcesManager.getInstance().camera;
@@ -25,36 +28,36 @@ public abstract class BaseMinigame {
     public boolean success = false;
 
     public void complete(){
-        completed = true;
-        success = true;
-        engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
-        SceneManager.getInstance().loadResultScene();
+        MinigameManager.getInstance().endMinigame(this, true);
     }
 
     public void fail(){
-        completed = true;
-        success = false;
-        engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
-        SceneManager.getInstance().loadResultScene();
+        MinigameManager.getInstance().endMinigame(this, false);
     }
 
-    public Scene getScene() {
-        return scene;
+    public void resetMinigame(){
+        scene = SceneManager.getInstance().minigameScene;
+        minigame = new Entity();
+        completed = false;
     }
 
-    public void setScene(BaseScene scene){
-        this.scene = scene;
+    public Entity getMinigame() {
+        return minigame;
     }
 
     public abstract String getName();
 
     public abstract void createMinigameScene();
 
-    public abstract void disposeMinigameScene();
-
     public abstract void loadResources();
+
+    public abstract void onStart();
+
+    public abstract void disposeMinigameScene();
 
     public abstract void unloadResources();
 
-    public abstract void onStart();
+    public abstract void onFinish();
+
+
 }

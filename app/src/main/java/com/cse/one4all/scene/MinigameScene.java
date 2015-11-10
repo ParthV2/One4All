@@ -18,10 +18,9 @@ import org.andengine.util.adt.align.HorizontalAlign;
 public class MinigameScene extends BaseScene {
 
     private Text timerText;
-    private int timeLeft;
+    public int timeLeft;
 
     private HUD minigameHUD;
-    private Sprite back;
     public TimerHandler handler;
 
     @Override
@@ -31,10 +30,11 @@ public class MinigameScene extends BaseScene {
 
     @Override
     public void populateScene() {
+        timerText.setText(timeLeft + "");
+
         handler = new TimerHandler(1f, true, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
-
                 if (timeLeft <= 0) {
                     MinigameManager.getInstance().currentMinigame.fail();
                     engine.unregisterUpdateHandler(pTimerHandler);
@@ -45,14 +45,13 @@ public class MinigameScene extends BaseScene {
             }
         });
         engine.registerUpdateHandler(handler);
-
     }
 
 
 
     @Override
     public void onBackKeyPressed() {
-        SceneManager.getInstance().loadMenuScene(engine);
+        MinigameManager.getInstance().endGame();
     }
 
     @Override

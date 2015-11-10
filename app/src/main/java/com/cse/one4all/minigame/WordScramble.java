@@ -263,6 +263,11 @@ public class WordScramble extends BaseMinigame
     }
 
     @Override
+    public void onFinish() {
+
+    }
+
+    @Override
     public void onStart()
     {
         if((letterW.getPx() == 200 && letterW.getPy() == 205) && (letterI.getPx() == 275 && letterI.getPy() == 205) &&

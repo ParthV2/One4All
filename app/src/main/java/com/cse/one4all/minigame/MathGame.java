@@ -108,6 +108,11 @@ public class MathGame extends BaseMinigame
     }
 
     @Override
+    public void onFinish() {
+
+    }
+
+    @Override
     public void onStart()
     {
         message = new Text(240, 400, ResourcesManager.getInstance().font, "Remember the three numbers", scene.vbom);

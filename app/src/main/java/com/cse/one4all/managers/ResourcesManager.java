@@ -123,8 +123,6 @@ public class ResourcesManager {
         this.loadGameGraphics();
         this.loadGameFonts();
         this.loadGameAudio();
-
-        MinigameManager.getInstance().loadResources();
     }
 
     private void loadGameGraphics() {

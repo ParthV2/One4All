@@ -210,6 +210,11 @@ public class CardMatch extends BaseMinigame
     }
 
     @Override
+    public void onFinish() {
+
+    }
+
+    @Override
     public void onStart() {
 
     }

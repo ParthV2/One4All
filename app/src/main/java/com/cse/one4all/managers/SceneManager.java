@@ -96,14 +96,14 @@ public class SceneManager {
 
         ResourcesManager.getInstance().loadGameResources();
         minigameScene = new MinigameScene();
-        /*
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
-                mEngine.unregisterUpdateHandler(pTimerHandler);
+        setScene(minigameScene);
 
-            }
-        }));
-        */
+//        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+//            public void onTimePassed(final TimerHandler pTimerHandler) {
+//                mEngine.unregisterUpdateHandler(pTimerHandler);
+//
+//            }
+//        }));
     }
 
     public void loadResultScene(){
