@@ -38,6 +38,8 @@ public class Helicopter extends BaseMinigame {
     private int[] obstacleYPos = new int[4];
     private int[] obstacleVel = new int[4];
 
+    private TimerHandler timer;
+
     public void updateHeli()
     {
         heliYPos = heliYPos + heliVel;
@@ -91,6 +93,7 @@ public class Helicopter extends BaseMinigame {
     public void onStart()
     {
         //Initial Value of variables
+        success = true;
         localFail = false;
         heliXPos = 0;
         heliYPos = 0;
@@ -105,7 +108,7 @@ public class Helicopter extends BaseMinigame {
         }
 
 
-        engine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+        engine.registerUpdateHandler(timer = new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler)
             {
                 //Updates Objects
@@ -162,7 +165,8 @@ public class Helicopter extends BaseMinigame {
     @Override
     public void disposeMinigameScene()
     {
-        scene.disposeScene();
+        engine.unregisterUpdateHandler(timer);
+        scene.unregisterTouchArea(thrust);
     }
 
 

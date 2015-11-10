@@ -147,7 +147,7 @@ public class MinigameManager {
         minigames.add(new TapTheColor());
         minigames.add(new ClickThe6s());
 //        minigames.add(new WordScramble());
-//        minigames.add(new Helicopter());
+        minigames.add(new Helicopter());
 //        minigames.add(new MathGame());
 
     }
