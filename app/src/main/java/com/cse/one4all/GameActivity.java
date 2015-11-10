@@ -73,6 +73,7 @@ public class GameActivity extends BaseGameActivity {
                 //SceneManager.getInstance().createMenuScene();
                 MinigameManager.getInstance().init();
 
+
             }
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();

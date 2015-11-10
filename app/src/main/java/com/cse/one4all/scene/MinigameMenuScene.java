@@ -60,10 +60,10 @@ public class MinigameMenuScene extends BaseScene {
     {
 //        List<String> names = new ArrayList<String>(MinigameManager.getInstance().minigames.size());
 //        int y = 500;
-//        for(i = 0; i < 4; i++)
+//        for(i = 0; i < MinigameManager.getInstance().minigames.size(); i++)
 //        {
 //            names.add(MinigameManager.getInstance().minigames.get(i).getName());
-//            temp = new Text(240, y, ResourcesManager.getInstance().font, MinigameManager.getInstance().minigames.get(i).getName(), vbom)
+//            temp = new Text(240, y, ResourcesManager.getInstance().font, names.get(i), vbom)
 //            {
 //                @Override
 //                public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
@@ -71,7 +71,7 @@ public class MinigameMenuScene extends BaseScene {
 //                    if(pTouchEvent.isActionDown()){
 //
 //                        SceneManager.getInstance().loadGameScene(engine);
-//                        MinigameManager.getInstance().startMinigame(MinigameManager.getInstance().minigames.get(i).getName());
+//                        MinigameManager.getInstance().startMinigame(names.get(i));
 //                    }
 //
 //                    return true;
