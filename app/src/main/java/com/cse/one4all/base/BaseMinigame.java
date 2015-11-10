@@ -28,10 +28,12 @@ public abstract class BaseMinigame {
     public boolean success = false;
 
     public void complete(){
+        success = true;
         MinigameManager.getInstance().endMinigame(this, true);
     }
 
     public void fail(){
+        success = false;
         MinigameManager.getInstance().endMinigame(this, false);
     }
 

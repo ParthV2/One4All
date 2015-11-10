@@ -25,11 +25,12 @@ public class MathGame extends BaseMinigame
     private int answers[] = new int[3];
     private String strings[] = new String[3];
     private int addition = 0, answer;
-    private int subtraction = 0, choice;
+    private int subtraction = 0, choice, i, x, y;
+//    private List<Text> textAnswers = new ArrayList<Text>(3);
 
     @Override
     public String getName() {
-        return null;
+        return "Math Game";
     }
 
     @Override
@@ -115,31 +116,54 @@ public class MathGame extends BaseMinigame
     @Override
     public void onStart()
     {
+//        x = 200;
+//        y = 200;
         message = new Text(240, 400, ResourcesManager.getInstance().font, "Remember the three numbers", scene.vbom);
-        scene.attachChild(message);
+        minigame.attachChild(message);
         text1 = new Text(200, 200, ResourcesManager.getInstance().font, strings[0], scene.vbom);
-        scene.attachChild(text1);
+        minigame.attachChild(text1);
         text2 = new Text(400, 200, ResourcesManager.getInstance().font, strings[1], scene.vbom);
-        scene.attachChild(text2);
+        minigame.attachChild(text2);
         text3 = new Text(600, 200, ResourcesManager.getInstance().font, strings[2], scene.vbom);
-        scene.attachChild(text3);
+        minigame.attachChild(text3);
 
         engine.registerUpdateHandler(new TimerHandler(5f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
-                scene.detachChild(text1);
-                scene.detachChild(text2);
-                scene.detachChild(text3);
-                scene.detachChild(message);
+                minigame.detachChild(text1);
+                minigame.detachChild(text2);
+                minigame.detachChild(text3);
+                minigame.detachChild(message);
                 if(choice == 1)
                 {
                     Text add = new Text(350, 400, ResourcesManager.getInstance().font, "What is the sum of three integers?", scene.vbom);
-                    scene.attachChild(add);
+                    minigame.attachChild(add);
                 }
                 else
                 {
                     Text subtract = new Text(330, 400, ResourcesManager.getInstance().font, "What is the difference of three integers?", scene.vbom);
-                    scene.attachChild(subtract);
+                    minigame.attachChild(subtract);
                 }
+//                for(i =0; i < 3; i++)
+//                {
+//                    ans1 = new Text(x, y, ResourcesManager.getInstance().font, String.valueOf(answers[i]), scene.vbom)
+//                    {
+//                        public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
+//                        {
+//                            int temp = Integer.parseInt(textAnswers.get(i).getText().toString());
+//                            if(temp == answer)
+//                                complete();
+//                            else
+//                                fail();
+//
+//                           return true;
+//                        }
+//                    };
+//                    textAnswers.add(ans1);
+//                    scene.attachChild(textAnswers.get(i));
+//                    scene.registerTouchArea(textAnswers.get(i));
+//                    x+=100;
+//
+//                }
                 ans1 = new Text(200, 200, ResourcesManager.getInstance().font, String.valueOf(answers[0]), scene.vbom)
                 {
                     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
@@ -178,11 +202,11 @@ public class MathGame extends BaseMinigame
                         return true;
                     }
                 };
-                scene.attachChild(ans1);
+                minigame.attachChild(ans1);
                 scene.registerTouchArea(ans1);
-                scene.attachChild(ans2);
+                minigame.attachChild(ans2);
                 scene.registerTouchArea(ans2);
-                scene.attachChild(ans3);
+                minigame.attachChild(ans3);
                 scene.registerTouchArea(ans3);
                 engine.unregisterUpdateHandler(pTimerHandler);
             }

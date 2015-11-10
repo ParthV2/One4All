@@ -11,7 +11,14 @@ import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.color.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MinigameMenuScene extends BaseScene {
+    private List<String> names = new ArrayList<String>(MinigameManager.getInstance().minigames.size());
+    private List<Text> text = new ArrayList<Text>(MinigameManager.getInstance().minigames.size());
+    private int i;
+    private Text temp;
 
     @Override
     public void createScene() {
@@ -49,7 +56,34 @@ public class MinigameMenuScene extends BaseScene {
         attachChild(logo);
     }
 
-    private void createMenuScene() {
+    private void createMenuScene()
+    {
+//        List<String> names = new ArrayList<String>(MinigameManager.getInstance().minigames.size());
+//        int y = 500;
+//        for(i = 0; i < MinigameManager.getInstance().minigames.size(); i++)
+//        {
+//            names.add(MinigameManager.getInstance().minigames.get(i).getName());
+//            temp = new Text(240, y, ResourcesManager.getInstance().font, names.get(i), vbom)
+//            {
+//                @Override
+//                public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
+//                {
+//                    if(pTouchEvent.isActionDown()){
+//
+//                        SceneManager.getInstance().loadGameScene(engine);
+//                        MinigameManager.getInstance().startMinigame(names.get(i));
+//                    }
+//
+//                    return true;
+//                }
+//            };
+//            text.add(temp);
+//            attachChild(text.get(i));
+//            registerTouchArea(text.get(i));
+//
+//            y+=75;
+//        }
+
         final Text clickThe6s = new Text(400, 270, ResourcesManager.getInstance().font, "Click The 6's", vbom)
         {
             @Override

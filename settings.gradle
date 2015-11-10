@@ -1,1 +1,1 @@
-include ':andEngineMultiplayerExtension', ':andEngine', 'app', 'andEnginePhysicsBox2DExtension'
+include ':andEngineMultiplayerExtension', 'app', 'andEnginePhysicsBox2DExtension', ':andEngine'
