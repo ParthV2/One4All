@@ -67,11 +67,14 @@ public class GameActivity extends BaseGameActivity {
         mEngine.registerUpdateHandler(new TimerHandler(5f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
+
+                MinigameManager.getInstance().init();
+
                 SceneManager.getInstance().createMenuScene();
 
                 //ResourcesManager.getInstance().loadMenuResources();
                 //SceneManager.getInstance().createMenuScene();
-                MinigameManager.getInstance().init();
+
 
             }
         }));
