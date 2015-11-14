@@ -3,16 +3,16 @@ package com.cse.one4all.scene;
 import com.cse.one4all.base.BaseScene;
 import com.cse.one4all.managers.MinigameManager;
 import com.cse.one4all.managers.ResourcesManager;
-import com.cse.one4all.managers.SceneManager;
 
-import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.text.Text;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.adt.align.HorizontalAlign;
 
 public class MinigameScene extends BaseScene {
@@ -23,8 +23,12 @@ public class MinigameScene extends BaseScene {
     public int timeLeft;
 
     private HUD minigameHUD;
-    private Sprite back;
     public TimerHandler handler;
+
+    private BitmapTextureAtlas HUDTextureAtlas;
+    private ITextureRegion blueHeartTR, redHeartTR, greenHeartTR, yellowHeartTR, timerTR;
+    private Sprite blueHeartSprite, redHeartSprite, greenHeartSprite, yellowHeartSprite, timerSprite;
+
 
     @Override
     public void createScene() {
@@ -52,8 +56,6 @@ public class MinigameScene extends BaseScene {
 
     }
 
-
-
     @Override
     public void onBackKeyPressed() {
         MinigameManager.getInstance().endGame();
@@ -73,44 +75,73 @@ public class MinigameScene extends BaseScene {
     private void createHUD(){
         minigameHUD = new HUD();
 
+        //Textures
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        HUDTextureAtlas = new BitmapTextureAtlas(ResourcesManager.getInstance().activity.getTextureManager(), 256,256);
+
+        blueHeartTR =  BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
+                ResourcesManager.getInstance().activity, "heartBlue.png", 0,0);
+        redHeartTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
+                ResourcesManager.getInstance().activity, "heartRed.png", 0,32);
+        greenHeartTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
+                ResourcesManager.getInstance().activity, "heartGreen.png", 32,0);
+        yellowHeartTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
+                ResourcesManager.getInstance().activity, "heartYellow.png", 32,32);
+        timerTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
+                ResourcesManager.getInstance().activity, "timer.png", 0, 64);
+
+        redHeartSprite = new Sprite(camera.getCenterX(), camera.getHeight() - 16, redHeartTR, vbom);
+        blueHeartSprite = new Sprite(camera.getCenterX() - 40, camera.getYMin() + 16, blueHeartTR, vbom);
+        greenHeartSprite = new Sprite(camera.getCenterX() , camera.getYMin() + 16, greenHeartTR, vbom);
+        yellowHeartSprite = new Sprite(camera.getCenterX() + 40, camera.getYMin() + 16, yellowHeartTR, vbom);
+        timerSprite = new Sprite(16, camera.getHeight() - 32, timerTR, vbom);
+
+
+
+        //Timer
         timeLeft = MinigameManager.TIMER_SECONDS;
         timerText = new Text(0, 0, resourcesManager.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         timerText.setText(timeLeft + "");
         timerText.setAnchorCenter(0, 0);
-        timerText.setPosition(5, camera.getHeight() - timerText.getHeight());
+        timerText.setPosition(35, camera.getHeight() - timerText.getHeight());
+
+
+        //Player lives
+        p1LivesLeft = 10;
+        p2LivesLeft = 10;
+        p3LivesLeft = 10;
+        p4LivesLeft = 10;
+
+        p1LivesText = new Text(redHeartSprite.getX(), redHeartSprite.getY(),
+                resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p2LivesText = new Text(blueHeartSprite.getX(), blueHeartSprite.getY(),
+                resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p3LivesText = new Text(greenHeartSprite.getX(), greenHeartSprite.getY(),
+                resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p4LivesText = new Text(yellowHeartSprite.getX(), yellowHeartSprite.getY(),
+                resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+
+        p1LivesText.setText(p1LivesLeft + "");
+        p2LivesText.setText(p2LivesLeft + "");
+        p3LivesText.setText(p3LivesLeft + "");
+        p4LivesText.setText(p4LivesLeft + "");
+
+
+        //Attach
+        HUDTextureAtlas.load();
+        minigameHUD.attachChild(blueHeartSprite);
+        minigameHUD.attachChild(redHeartSprite);
+        minigameHUD.attachChild(greenHeartSprite);
+        minigameHUD.attachChild(yellowHeartSprite);
+        minigameHUD.attachChild(timerSprite);
 
         minigameHUD.attachChild(timerText);
-
-        p1LivesLeft = 10;
-        p1LivesText = new Text(0, 0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        p1LivesText.setText(p1LivesLeft + "");
-        p1LivesText.setAnchorCenter(0, 0);
-        p1LivesText.setPosition(camera.getCenterX() - (p1LivesText.getWidth() / 2), camera.getHeight() - p1LivesText.getHeight());
         minigameHUD.attachChild(p1LivesText);
-        camera.setHUD(minigameHUD);
-
-        p2LivesLeft = 10;
-        p2LivesText = new Text(0, 0, resourcesManager.p2LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        p2LivesText.setText(p2LivesLeft + "");
-        p2LivesText.setAnchorCenter(0, 0);
-        p2LivesText.setPosition((camera.getCenterX() - (p2LivesText.getWidth()/2)-20), camera.getYMin()+3);
         minigameHUD.attachChild(p2LivesText);
-        camera.setHUD(minigameHUD);
-
-        p3LivesLeft = 10;
-        p3LivesText = new Text(0, 0, resourcesManager.p3LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        p3LivesText.setText(p3LivesLeft + "");
-        p3LivesText.setAnchorCenter(0, 0);
-        p3LivesText.setPosition(camera.getCenterX() - (p3LivesText.getWidth()/2), camera.getYMin()+3);
         minigameHUD.attachChild(p3LivesText);
+        minigameHUD.attachChild(p4LivesText);
+
         camera.setHUD(minigameHUD);
 
-        p4LivesLeft = 10;
-        p4LivesText = new Text(0, 0, resourcesManager.p4LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        p4LivesText.setText(p4LivesLeft + "");
-        p4LivesText.setAnchorCenter(0, 0);
-        p4LivesText.setPosition((camera.getCenterX() - (p4LivesText.getWidth()/2)+20), camera.getYMin()+3);
-        minigameHUD.attachChild(p4LivesText);
-        camera.setHUD(minigameHUD);
     }
 }
