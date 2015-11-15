@@ -95,25 +95,23 @@ public class ResourcesManager {
 
     private void loadMenuFonts(){
         FontFactory.setAssetBasePath("font/");
+
         final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        final ITexture mainFontTexture2 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        final ITexture mainFontTexture3 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
         font = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(),
                 "LeagueGothic-Regular.otf", 50, true, Color.WHITE);
-        font.load();
-
-        final ITexture mainFontTexture2 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
-                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-
         numberFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture2, activity.getAssets(),
                 "LeagueGothic-Regular.otf", 128, true, Color.WHITE);
-        numberFont.load();
-
-        final ITexture mainFontTexture3 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
-                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-
         p1LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture3, activity.getAssets(),
-                "LeagueGothic-Regular.otf", 25, true, Color.BLACK);
+                "LeagueGothic-Regular.otf", 32, true, Color.BLACK);
+
+        font.load();
+        numberFont.load();
         p1LivesFont.load();
 
 //        final ITexture mainFontTexture4 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,

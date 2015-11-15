@@ -81,29 +81,34 @@ public class MinigameScene extends BaseScene {
 
         blueHeartTR =  BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
                 ResourcesManager.getInstance().activity, "heartBlue.png", 0,0);
-        redHeartTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
-                ResourcesManager.getInstance().activity, "heartRed.png", 0,32);
         greenHeartTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
-                ResourcesManager.getInstance().activity, "heartGreen.png", 32,0);
+                ResourcesManager.getInstance().activity, "heartGreen.png", 50,0);
         yellowHeartTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
-                ResourcesManager.getInstance().activity, "heartYellow.png", 32,32);
+                ResourcesManager.getInstance().activity, "heartYellow.png", 0,50);
+        redHeartTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
+                ResourcesManager.getInstance().activity, "heartRed.png", 50,50);
         timerTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(HUDTextureAtlas,
-                ResourcesManager.getInstance().activity, "timer.png", 0, 64);
+                ResourcesManager.getInstance().activity, "timer.png", 110, 110);
 
-        redHeartSprite = new Sprite(camera.getCenterX(), camera.getHeight() - 16, redHeartTR, vbom);
-        blueHeartSprite = new Sprite(camera.getCenterX() - 40, camera.getYMin() + 16, blueHeartTR, vbom);
-        greenHeartSprite = new Sprite(camera.getCenterX() , camera.getYMin() + 16, greenHeartTR, vbom);
-        yellowHeartSprite = new Sprite(camera.getCenterX() + 40, camera.getYMin() + 16, yellowHeartTR, vbom);
-        timerSprite = new Sprite(16, camera.getHeight() - 32, timerTR, vbom);
+        timerSprite = new Sprite(0,0, timerTR, vbom);
+        redHeartSprite = new Sprite(0,0, redHeartTR, vbom);
+        yellowHeartSprite = new Sprite(0,0, yellowHeartTR, vbom);
+        greenHeartSprite = new Sprite(0,0, greenHeartTR, vbom);
+        blueHeartSprite = new Sprite(0,0, blueHeartTR, vbom);
 
+        timerSprite.setPosition(timerTR.getWidth() /2, camera.getHeight() - timerTR.getHeight());
+        redHeartSprite.setPosition(2 + redHeartTR.getWidth() /2, timerSprite.getY() - redHeartTR.getHeight() - 5);
+        yellowHeartSprite.setPosition(camera.getWidth() - (yellowHeartTR.getWidth() /2) -2,
+                camera.getHeight() - (yellowHeartTR.getHeight() /2) - 2);
+        greenHeartSprite.setPosition(yellowHeartSprite.getX() - greenHeartTR.getWidth() -5, yellowHeartSprite.getY());
+        blueHeartSprite.setPosition(greenHeartSprite.getX() - blueHeartTR.getWidth() -5, greenHeartSprite.getY());
 
 
         //Timer
         timeLeft = MinigameManager.TIMER_SECONDS;
         timerText = new Text(0, 0, resourcesManager.font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         timerText.setText(timeLeft + "");
-        timerText.setAnchorCenter(0, 0);
-        timerText.setPosition(35, camera.getHeight() - timerText.getHeight());
+        timerText.setPosition(50, camera.getHeight() - timerText.getHeight() /2);
 
 
         //Player lives
@@ -112,14 +117,15 @@ public class MinigameScene extends BaseScene {
         p3LivesLeft = 10;
         p4LivesLeft = 10;
 
-        p1LivesText = new Text(redHeartSprite.getX(), redHeartSprite.getY(),
-                resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        p2LivesText = new Text(blueHeartSprite.getX(), blueHeartSprite.getY(),
-                resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        p3LivesText = new Text(greenHeartSprite.getX(), greenHeartSprite.getY(),
-                resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        p4LivesText = new Text(yellowHeartSprite.getX(), yellowHeartSprite.getY(),
-                resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p1LivesText = new Text(0,0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p2LivesText = new Text(0,0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p3LivesText = new Text(0,0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p4LivesText = new Text(0,0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+
+        p1LivesText.setPosition(redHeartSprite.getX(), redHeartSprite.getY());
+        p2LivesText.setPosition(blueHeartSprite.getX(), blueHeartSprite.getY());
+        p3LivesText.setPosition(greenHeartSprite.getX(), greenHeartSprite.getY());
+        p4LivesText.setPosition(yellowHeartSprite.getX(), yellowHeartSprite.getY());
 
         p1LivesText.setText(p1LivesLeft + "");
         p2LivesText.setText(p2LivesLeft + "");
