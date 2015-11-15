@@ -11,7 +11,11 @@ import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import java.util.ArrayList;
@@ -34,6 +38,10 @@ public class MinigameManager {
     private boolean started = false;
 
     public static final int TIMER_SECONDS = 15;
+
+    private BitmapTextureAtlas resultTA;
+    private ITextureRegion greenCheckTR, redX_TR;
+
 
     public void startGame(){
         started = true;
@@ -85,12 +93,22 @@ public class MinigameManager {
         minigame.unloadResources();
 
         ResourcesManager.getInstance().engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
-        final Text result = new Text(camera.getCenterX(), camera.getCenterY(),
-                ResourcesManager.getInstance().font, success ? "Completed!" : "Failed!", vbom);
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+
+        resultTA = new BitmapTextureAtlas(ResourcesManager.getInstance().activity.getTextureManager(), 512,512);
+        greenCheckTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(resultTA, ResourcesManager.getInstance().activity, "greenCheck.png", 0,0);
+        redX_TR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(resultTA, ResourcesManager.getInstance().activity, "redX.png", 0, 256);
+
+        final Sprite result = new Sprite(camera.getCenterX(), camera.getCenterY(), success ? greenCheckTR : redX_TR, vbom);
+
+        resultTA.load();
+
+//        final Text result = new Text(camera.getCenterX(), camera.getCenterY(),
+//                ResourcesManager.getInstance().font, success ? "Completed!" : "Failed!", vbom);
 
         SceneManager.getInstance().minigameScene.attachChild(result);
 
-        ResourcesManager.getInstance().engine.registerUpdateHandler(new TimerHandler(3f, new ITimerCallback() {
+        ResourcesManager.getInstance().engine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 engine.unregisterUpdateHandler(pTimerHandler);
@@ -148,7 +166,7 @@ public class MinigameManager {
         minigames.add(new ClickThe6s());
 //        minigames.add(new WordScramble());
         minigames.add(new Helicopter());
-//        minigames.add(new MathGame());
+        minigames.add(new MathGame());
 
     }
 

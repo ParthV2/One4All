@@ -84,7 +84,7 @@ public class MinigameMenuScene extends BaseScene {
 //            y+=75;
 //        }
 
-        final Text clickThe6s = new Text(400, 270, ResourcesManager.getInstance().font, "Click The 6's", vbom)
+        final Text clickThe6s = new Text(400, 300, ResourcesManager.getInstance().font, "Click The 6's", vbom)
         {
             @Override
             public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
@@ -100,7 +100,7 @@ public class MinigameMenuScene extends BaseScene {
         };
         attachChild(clickThe6s);
         registerTouchArea(clickThe6s);
-        final Text helicopter = new Text(400, 220, ResourcesManager.getInstance().font, "Helicopter Game", vbom)
+        final Text helicopter = new Text(400, 250, ResourcesManager.getInstance().font, "Helicopter Game", vbom)
         {
             @Override
             public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
@@ -117,8 +117,8 @@ public class MinigameMenuScene extends BaseScene {
         attachChild(helicopter);
         registerTouchArea(helicopter);
 
-        /*
-        final Text wordScramble = new Text(400, 170, ResourcesManager.getInstance().font, "Word Scramble", vbom)
+
+        final Text wordScramble = new Text(400, 150, ResourcesManager.getInstance().font, "Word Scramble", vbom)
         {
             @Override
             public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
@@ -134,9 +134,9 @@ public class MinigameMenuScene extends BaseScene {
         };
         attachChild(wordScramble);
         registerTouchArea(wordScramble);
-        */
 
-        final Text tapTheColor = new Text(400, 170, ResourcesManager.getInstance().font, "Tap The Color", vbom)
+
+        final Text tapTheColor = new Text(400, 200, ResourcesManager.getInstance().font, "Tap The Color", vbom)
         {
             @Override
             public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
@@ -152,5 +152,23 @@ public class MinigameMenuScene extends BaseScene {
         };
         attachChild(tapTheColor);
         registerTouchArea(tapTheColor);
+
+
+        final Text mathGame = new Text(400, 100, ResourcesManager.getInstance().font, "Math Game", vbom)
+        {
+            @Override
+            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
+            {
+                if(pTouchEvent.isActionDown()){
+
+                    SceneManager.getInstance().loadGameScene(engine);
+                    MinigameManager.getInstance().startMinigame("Math Game");
+                }
+
+                return true;
+            }
+        };
+        attachChild(mathGame);
+        registerTouchArea(mathGame);
     }
 }
