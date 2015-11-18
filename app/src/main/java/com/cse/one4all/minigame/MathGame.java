@@ -26,6 +26,7 @@ public class MathGame extends BaseMinigame
     private String strings[] = new String[3];
     private int addition = 0, answer;
     private int subtraction = 0, choice, i, x, y;
+    private TimerHandler timer;
 //    private List<Text> textAnswers = new ArrayList<Text>(3);
 
     @Override
@@ -69,8 +70,9 @@ public class MathGame extends BaseMinigame
 
         if(choice == 1) //addition
         {
+
             answer = addition;
-            int rand = random.nextInt(5);
+            int rand = random.nextInt(5) + 1;
             int minimum = rand * -1;
             int maximum = rand;
             int randomNum = minimum + (int)(Math.random()*maximum);
@@ -81,8 +83,9 @@ public class MathGame extends BaseMinigame
         }
         else
         {
+
             answer = subtraction;
-            int rand = random.nextInt(5);
+            int rand = random.nextInt(5) +1;
             int minimum = rand * -1;
             int maximum = rand;
             int randomNum = minimum + (int)(Math.random()*maximum);
@@ -95,6 +98,7 @@ public class MathGame extends BaseMinigame
 
     @Override
     public void disposeMinigameScene() {
+        engine.unregisterUpdateHandler(timer);
 
     }
 
@@ -118,16 +122,16 @@ public class MathGame extends BaseMinigame
     {
 //        x = 200;
 //        y = 200;
-        message = new Text(240, 400, ResourcesManager.getInstance().font, "Remember the three numbers", scene.vbom);
+        message = new Text(330, 400, ResourcesManager.getInstance().font, "Remember the three numbers", scene.vbom);
         minigame.attachChild(message);
-        text1 = new Text(200, 200, ResourcesManager.getInstance().font, strings[0], scene.vbom);
+        text1 = new Text(200, 200, ResourcesManager.getInstance().numberFont, strings[0], scene.vbom);
         minigame.attachChild(text1);
-        text2 = new Text(400, 200, ResourcesManager.getInstance().font, strings[1], scene.vbom);
+        text2 = new Text(400, 200, ResourcesManager.getInstance().numberFont, strings[1], scene.vbom);
         minigame.attachChild(text2);
-        text3 = new Text(600, 200, ResourcesManager.getInstance().font, strings[2], scene.vbom);
+        text3 = new Text(600, 200, ResourcesManager.getInstance().numberFont, strings[2], scene.vbom);
         minigame.attachChild(text3);
 
-        engine.registerUpdateHandler(new TimerHandler(5f, new ITimerCallback() {
+        timer = new TimerHandler(5f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 minigame.detachChild(text1);
                 minigame.detachChild(text2);
@@ -135,13 +139,17 @@ public class MathGame extends BaseMinigame
                 minigame.detachChild(message);
                 if(choice == 1)
                 {
-                    Text add = new Text(350, 400, ResourcesManager.getInstance().font, "What is the sum of three integers?", scene.vbom);
+                    Text add = new Text(400, 400, ResourcesManager.getInstance().font, "What is the sum of three integers?", scene.vbom);
                     minigame.attachChild(add);
+                    Text temp = new Text(300, 350, ResourcesManager.getInstance().font, "Example: X + Y + Z", scene.vbom);
+                    minigame.attachChild(temp);
                 }
                 else
                 {
-                    Text subtract = new Text(330, 400, ResourcesManager.getInstance().font, "What is the difference of three integers?", scene.vbom);
+                    Text subtract = new Text(375, 400, ResourcesManager.getInstance().font, "What is the difference of three integers?", scene.vbom);
                     minigame.attachChild(subtract);
+                    Text temp = new Text(240, 350, ResourcesManager.getInstance().font, "Example: X - (Y + Z)", scene.vbom);
+                    minigame.attachChild(temp);
                 }
 //                for(i =0; i < 3; i++)
 //                {
@@ -164,7 +172,7 @@ public class MathGame extends BaseMinigame
 //                    x+=100;
 //
 //                }
-                ans1 = new Text(200, 200, ResourcesManager.getInstance().font, String.valueOf(answers[0]), scene.vbom)
+                ans1 = new Text(200, 200, ResourcesManager.getInstance().numberFont, String.valueOf(answers[0]), scene.vbom)
                 {
                     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
                     {
@@ -178,7 +186,7 @@ public class MathGame extends BaseMinigame
                     }
                 };
 
-                ans2 = new Text(300, 200, ResourcesManager.getInstance().font, String.valueOf(answers[1]), scene.vbom)
+                ans2 = new Text(400, 200, ResourcesManager.getInstance().numberFont, String.valueOf(answers[1]), scene.vbom)
                 {
                     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
                     {
@@ -190,7 +198,7 @@ public class MathGame extends BaseMinigame
                         return true;
                     }
                 };
-                ans3 = new Text(400, 200, ResourcesManager.getInstance().font, String.valueOf(answers[2]), scene.vbom)
+                ans3 = new Text(600, 200, ResourcesManager.getInstance().numberFont, String.valueOf(answers[2]), scene.vbom)
                 {
                     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
                     {
@@ -210,7 +218,8 @@ public class MathGame extends BaseMinigame
                 scene.registerTouchArea(ans3);
                 engine.unregisterUpdateHandler(pTimerHandler);
             }
-        }));
+        });
+        engine.registerUpdateHandler(timer);
 
 
 

@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/One4All.iml" filepath="$PROJECT_DIR$/One4All.iml" />
       <module fileurl="file://$PROJECT_DIR$/andEngine/andEngine.iml" filepath="$PROJECT_DIR$/andEngine/andEngine.iml" />
       <module fileurl="file://$PROJECT_DIR$/andEngineMultiplayerExtension/andEngineMultiplayerExtension.iml" filepath="$PROJECT_DIR$/andEngineMultiplayerExtension/andEngineMultiplayerExtension.iml" />
+      <module fileurl="file://$PROJECT_DIR$/andenginephysicsbox2dextension/andEnginePhysicsBox2DExtension.iml" filepath="$PROJECT_DIR$/andenginephysicsbox2dextension/andEnginePhysicsBox2DExtension.iml" />
       <module fileurl="file://$PROJECT_DIR$/andenginephysicsbox2dextension/andenginephysicsbox2dextension.iml" filepath="$PROJECT_DIR$/andenginephysicsbox2dextension/andenginephysicsbox2dextension.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
