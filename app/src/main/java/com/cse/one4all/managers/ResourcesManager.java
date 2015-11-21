@@ -29,7 +29,9 @@ public class ResourcesManager {
     public GameActivity activity;
     public VertexBufferObjectManager vbom;
     public BitmapTextureAtlas splashTA, minigameMenuTA;
-    public ITextureRegion mBtnPlayTexture, mBtnExitTexture, logoTexture, logoTexture2, mBtnCodeTexture, backTexture, logo2Texture;
+    public ITextureRegion mBtnPlayTexture, mBtnExitTexture, logoTexture, logoTexture2, mBtnCodeTexture,
+            backTexture, logo2Texture, mBtnTapColorTexture, mBtnHelicopterTexture, mBtnMathGameTexture,
+            mBtnClick6Texture;
 
     public Font font, menuFont, numberFont, p1LivesFont, p2LivesFont, p3LivesFont, p4LivesFont;
 
@@ -48,7 +50,7 @@ public class ResourcesManager {
 
         splashTA = new BitmapTextureAtlas(activity.getTextureManager(), 2000, 700, TextureOptions.BILINEAR);
         logoTexture = BitmapTextureAtlasTextureRegionFactory.
-                createFromAsset(splashTA, activity, "Title2.png", 0, 64);
+                createFromAsset(splashTA, activity, "Title1.png", 0, 64);
         backTexture = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(splashTA, activity, "buttonBack.png", 0, 0);
 
@@ -80,6 +82,16 @@ public class ResourcesManager {
                 createFromAsset(menuTextureAtlas, activity, "buttonSP.png");
         logoTexture2 = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(menuTextureAtlas, activity, "Title2.png");
+        mBtnClick6Texture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonClick6.png");
+        mBtnHelicopterTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonHeli.png");
+        mBtnTapColorTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonTapColor.png");
+        mBtnMathGameTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonMath.png");
+
+
 
         try {
             this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -166,7 +178,7 @@ public class ResourcesManager {
 
     public void loadMinigameMenuResources() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        minigameMenuTA = new BitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
+        minigameMenuTA = new BitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         logo2Texture = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(minigameMenuTA,activity, "Title1.png", 0, 0);
         minigameMenuTA.load();
