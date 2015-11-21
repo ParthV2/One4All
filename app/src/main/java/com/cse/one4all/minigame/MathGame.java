@@ -37,6 +37,8 @@ public class MathGame extends BaseMinigame
     @Override
     public void createMinigameScene()
     {
+        addition =0;
+        subtraction=0;
         List<Integer> numPos = new ArrayList<Integer>(3);
         List<Integer> nums = new ArrayList<Integer>(6);
         List<String> numString = new ArrayList<String>(6);
@@ -76,9 +78,19 @@ public class MathGame extends BaseMinigame
             int minimum = rand * -1;
             int maximum = rand;
             int randomNum = minimum + (int)(Math.random()*maximum);
-            answers[numPos.get(0)] = addition + randomNum;
-            answers[numPos.get(1)] = addition;
-            answers[numPos.get(2)] = addition - randomNum;
+            if(choice == 1)
+            {
+                answers[numPos.get(0)] = addition + randomNum;
+                answers[numPos.get(1)] = addition;
+                answers[numPos.get(2)] = addition - randomNum;
+            }
+            else
+            {
+                answers[numPos.get(0)] = addition + randomNum;
+                answers[numPos.get(1)] = addition;
+                answers[numPos.get(2)] = addition + (2) *randomNum;
+            }
+
 
         }
         else
@@ -89,9 +101,20 @@ public class MathGame extends BaseMinigame
             int minimum = rand * -1;
             int maximum = rand;
             int randomNum = minimum + (int)(Math.random()*maximum);
-            answers[numPos.get(0)] = subtraction + randomNum;
-            answers[numPos.get(1)] = subtraction;
-            answers[numPos.get(2)] = subtraction - randomNum;
+            if(choice == 1)
+            {
+                answers[numPos.get(0)] = subtraction + randomNum;
+                answers[numPos.get(1)] = subtraction;
+                answers[numPos.get(2)] = subtraction - randomNum;
+            }
+            else
+            {
+                answers[numPos.get(0)] = subtraction - 2*randomNum;
+                answers[numPos.get(1)] = subtraction;
+                answers[numPos.get(2)] = subtraction - randomNum;
+            }
+
+
         }
 
     }
@@ -216,7 +239,7 @@ public class MathGame extends BaseMinigame
                 scene.registerTouchArea(ans2);
                 minigame.attachChild(ans3);
                 scene.registerTouchArea(ans3);
-                engine.unregisterUpdateHandler(pTimerHandler);
+
             }
         });
         engine.registerUpdateHandler(timer);
