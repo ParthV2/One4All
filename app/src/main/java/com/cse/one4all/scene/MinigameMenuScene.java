@@ -4,7 +4,6 @@ import com.cse.one4all.base.BaseScene;
 import com.cse.one4all.managers.MinigameManager;
 import com.cse.one4all.managers.ResourcesManager;
 import com.cse.one4all.managers.SceneManager;
-import com.cse.one4all.minigame.TapTheColor;
 
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.scene.menu.MenuScene;
@@ -12,25 +11,23 @@ import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.color.Color;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class MinigameMenuScene extends BaseScene  {
-    private List<String> names = new ArrayList<String>(MinigameManager.getInstance().minigames.size());
-    private List<Text> text = new ArrayList<Text>(MinigameManager.getInstance().minigames.size());
-    private int i;
-    private Text temp;
+public class MinigameMenuScene extends BaseScene implements MenuScene.IOnMenuItemClickListener {
+
+    private MenuScene miniMenuChildScene;
+
+    private static final int MENU_TAP_COLOR = 0;
+    private static final int MENU_HELICOPTER = 1;
+    private static final int MENU_CLICK6 = 2;
+    private static final int MENU_MATH = 3;
 
     @Override
     public void createScene() {
 
         createBackground();
-        createMenuScene();
-
+        createMenuChildScene();
     }
 
     @Override
@@ -62,178 +59,62 @@ public class MinigameMenuScene extends BaseScene  {
         attachChild(logo);
     }
 
-    private void createMenuScene()
+    private void createMenuChildScene()
     {
-        final Sprite btnTapTheColor = new Sprite(0,0, ResourcesManager.getInstance().mBtnTapColorTexture, vbom){
-            @Override
-            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
-            {
-                if(pTouchEvent.isActionDown()){
+        miniMenuChildScene = new MenuScene(camera);
+        miniMenuChildScene.setAnchorCenter(0, 0);
+        miniMenuChildScene.setPosition(0, 0);
 
-                    SceneManager.getInstance().loadGameScene(engine);
-                    MinigameManager.getInstance().startMinigame("Tap The Color");
-                }
+        final IMenuItem tapColorMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(
+                MENU_TAP_COLOR, resourcesManager.mBtnTapColorTexture, vbom), 1.1f, 1);
+        final IMenuItem helicopterMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(
+                MENU_HELICOPTER, resourcesManager.mBtnHelicopterTexture, vbom), 1.1f, 1);
+        final IMenuItem click6MenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(
+                MENU_CLICK6, resourcesManager.mBtnClick6Texture, vbom), 1.1f, 1);
+        final IMenuItem mathMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(
+                MENU_MATH, resourcesManager.mBtnMathGameTexture, vbom), 1.1f, 1);
 
-                return true;
-            }
-        };
+        miniMenuChildScene.addMenuItem(tapColorMenuItem);
+        miniMenuChildScene.addMenuItem(helicopterMenuItem);
+        miniMenuChildScene.addMenuItem(click6MenuItem);
+        miniMenuChildScene.addMenuItem(mathMenuItem);
 
-        final Sprite btnHelicopter = new Sprite(0,0, ResourcesManager.getInstance().mBtnHelicopterTexture, vbom){
-            @Override
-            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pTouchEvent.isActionDown()) {
+        miniMenuChildScene.buildAnimations();
+        miniMenuChildScene.setBackgroundEnabled(false);
 
-                    SceneManager.getInstance().loadGameScene(engine);
-                    MinigameManager.getInstance().startMinigame("Helicopter Game");
-                }
+        tapColorMenuItem.setPosition(300, 150);
+        helicopterMenuItem.setPosition(300, 250);
+        click6MenuItem.setPosition(500, 150);
+        mathMenuItem.setPosition(500, 250);
 
-                return true;
-            }
-        };
+        miniMenuChildScene.setOnMenuItemClickListener(this);
 
-        final Sprite btnClick6 = new Sprite(0,0, ResourcesManager.getInstance().mBtnClick6Texture, vbom){
-            @Override
-            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pTouchEvent.isActionDown()) {
-
-                    SceneManager.getInstance().loadGameScene(engine);
-                    MinigameManager.getInstance().startMinigame("Click The 6's");
-                }
-
-                return true;
-            }
-        };
-
-        final Sprite btnMathGame = new Sprite(0,0, ResourcesManager.getInstance().mBtnMathGameTexture, vbom){
-            @Override
-            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-                if (pTouchEvent.isActionDown()) {
-
-                    SceneManager.getInstance().loadGameScene(engine);
-                    MinigameManager.getInstance().startMinigame("Math Game");
-                }
-
-                return true;
-            }
-        };
-
-        btnClick6.setPosition(300,150);
-        btnHelicopter.setPosition(300, 250);
-        btnMathGame.setPosition(500, 150);
-        btnTapTheColor.setPosition(500, 250);
-
-        attachChild(btnClick6);
-        attachChild(btnHelicopter);
-        attachChild(btnMathGame);
-        attachChild(btnTapTheColor);
-
-        registerTouchArea(btnClick6);
-        registerTouchArea(btnHelicopter);
-        registerTouchArea(btnMathGame);
-        registerTouchArea(btnTapTheColor);
-
-
-
-//        List<String> names = new ArrayList<String>(MinigameManager.getInstance().minigames.size());
-//        int y = 500;
-//        for(i = 0; i < MinigameManager.getInstance().minigames.size(); i++)
-//        {
-//            names.add(MinigameManager.getInstance().minigames.get(i).getName());
-//            temp = new Text(240, y, ResourcesManager.getInstance().font, names.get(i), vbom)
-//            {
-//                @Override
-//                public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
-//                {
-//                    if(pTouchEvent.isActionDown()){
-//
-//                        SceneManager.getInstance().loadGameScene(engine);
-//                        MinigameManager.getInstance().startMinigame(names.get(i));
-//                    }
-//
-//                    return true;
-//                }
-//            };
-//            text.add(temp);
-//            attachChild(text.get(i));
-//            registerTouchArea(text.get(i));
-//
-//            y+=75;
-//        }
-//
-//        final Text clickThe6s = new Text(400, 300, ResourcesManager.getInstance().font, "Click The 6's", vbom)
-//        {
-//            @Override
-//            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
-//            {
-//                if(pTouchEvent.isActionDown()){
-//
-//                    SceneManager.getInstance().loadGameScene(engine);
-//                    MinigameManager.getInstance().startMinigame("Click The 6's");
-//                }
-//
-//                return true;
-//            }
-//        };
-//        attachChild(clickThe6s);
-//        registerTouchArea(clickThe6s);
-//        final Text helicopter = new Text(400, 250, ResourcesManager.getInstance().font, "Helicopter Game", vbom)
-//        {
-//            @Override
-//            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
-//            {
-//                if(pTouchEvent.isActionDown()){
-//
-//                    SceneManager.getInstance().loadGameScene(engine);
-//                    MinigameManager.getInstance().startMinigame("Helicopter Game");
-//                }
-//
-//                return true;
-//            }
-//        };
-//        attachChild(helicopter);
-//        registerTouchArea(helicopter);
-//
-//
-//
-//        final Text tapTheColor = new Text(400, 200, ResourcesManager.getInstance().font, "Tap The Color", vbom)
-//        {
-//            @Override
-//            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
-//            {
-//                if(pTouchEvent.isActionDown()){
-//
-//                    SceneManager.getInstance().loadGameScene(engine);
-//                    MinigameManager.getInstance().startMinigame("Tap The Color");
-//                }
-//
-//                return true;
-//            }
-//        };
-//        attachChild(tapTheColor);
-//        registerTouchArea(tapTheColor);
-//
-//
-//        final Text mathGame = new Text(400, 100, ResourcesManager.getInstance().font, "Math Game", vbom)
-//        {
-//            @Override
-//            public boolean onAreaTouched(TouchEvent pTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
-//            {
-//                if(pTouchEvent.isActionDown()){
-//
-//                    SceneManager.getInstance().loadGameScene(engine);
-//                    MinigameManager.getInstance().startMinigame("Math Game");
-//                }
-//
-//                return true;
-//            }
-//        };
-//        attachChild(mathGame);
-//        registerTouchArea(mathGame);
-
-
+        setChildScene(miniMenuChildScene);
 
     }
 
+    @Override
+    public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
 
-
+        switch(pMenuItem.getID()){
+            case MENU_TAP_COLOR:
+                SceneManager.getInstance().loadGameScene(engine);
+                MinigameManager.getInstance().startMinigame("Tap the Color");
+                return true;
+            case MENU_HELICOPTER:
+                SceneManager.getInstance().loadGameScene(engine);
+                MinigameManager.getInstance().startMinigame("Helicopter Game");
+                return true;
+            case MENU_CLICK6:
+                SceneManager.getInstance().loadGameScene(engine);
+                MinigameManager.getInstance().startMinigame("Click the 6's");
+                return true;
+            case MENU_MATH:
+                SceneManager.getInstance().loadGameScene(engine);
+                MinigameManager.getInstance().startMinigame("Math Game");
+                return true;
+            default:
+                return false;
+        }
+    }
 }
