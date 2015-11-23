@@ -3,6 +3,7 @@ package com.cse.one4all.managers;
 import com.cse.one4all.base.BaseMinigame;
 import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.Helicopter;
+import com.cse.one4all.minigame.Hexagons;
 import com.cse.one4all.minigame.MathGame;
 import com.cse.one4all.minigame.TapTheColor;
 import com.cse.one4all.scene.SceneType;
@@ -162,11 +163,12 @@ public class MinigameManager {
     }
 
     public void init(){
-        minigames.add(new TapTheColor());
-        minigames.add(new ClickThe6s());
+//        minigames.add(new TapTheColor());
+//        minigames.add(new ClickThe6s());
 //        minigames.add(new WordScramble());
         minigames.add(new Helicopter());
-        minigames.add(new MathGame());
+        minigames.add(new Hexagons());
+//        minigames.add(new MathGame());
 
     }
 
