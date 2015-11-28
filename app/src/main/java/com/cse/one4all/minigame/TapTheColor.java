@@ -33,10 +33,11 @@ public class TapTheColor extends BaseMinigame {
 
     @Override
     public void onStart() {
+        success = false;
         timer = new TimerHandler(2f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mCircle.setCurrentTileIndex(random.nextInt(4));
-                currentTextName = random.nextInt(ColorNames.size());
+                currentTextName = random.nextInt(4);
                 mText.setText(ColorNames.get(currentTextName));
                 mText.setColor(Colors.get(random.nextInt(Colors.size())));
 
@@ -77,21 +78,26 @@ public class TapTheColor extends BaseMinigame {
                     return false;
                 }
 
-                if(currentTextName == mCircle.getCurrentTileIndex())
-                {
+                else if(currentTextName == mCircle.getCurrentTileIndex()){
+                    //success = true;
                     complete();
                 }
+
+                else if(!(currentTextName == mCircle.getCurrentTileIndex())){
+                    fail();
+                }
+
                 return true;
             }
         };
 
         mText = new Text(camera.getCenterX(), camera.getCenterY() + 128, ResourcesManager.getInstance().font, "RedBlueGreenYellow", scene.vbom);
+        currentTextName = 3;
         mText.setText(ColorNames.get(currentTextName));
         mText.setColor(Color.BLUE);
 
         minigame.attachChild(mCircle);
         minigame.attachChild(mText);
-
 
         scene.registerTouchArea(mCircle);
     }
