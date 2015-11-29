@@ -1,12 +1,10 @@
 package com.cse.one4all.minigame;
 
 import com.cse.one4all.base.BaseMinigame;
-import com.cse.one4all.managers.ResourcesManager;
 
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
@@ -77,7 +75,7 @@ public class Helicopter extends BaseMinigame {
         //Death if you come within 10 units of the middle of an obstacle
         for (int i = 0; i < 4; i++)
         {
-            if (heliXPos >= obstacleXPos[i] - 10 && heliXPos <= obstacleXPos[i] + 10 && heliYPos >= obstacleYPos[i] - 10 && heliYPos <= obstacleYPos[i] + 10)
+            if (heliXPos >= obstacleXPos[i] - 55 && heliXPos <= obstacleXPos[i] + 55 && heliYPos >= obstacleYPos[i] - 50 && heliYPos <= obstacleYPos[i] + 50)
             {
                 localFail = true;
             }

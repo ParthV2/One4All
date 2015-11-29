@@ -3,17 +3,14 @@ package com.cse.one4all.managers;
 import com.cse.one4all.base.BaseMinigame;
 import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.Helicopter;
-import com.cse.one4all.minigame.Hexagons;
 import com.cse.one4all.minigame.MathGame;
 import com.cse.one4all.minigame.TapTheColor;
-import com.cse.one4all.scene.SceneType;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -163,12 +160,11 @@ public class MinigameManager {
     }
 
     public void init(){
-//        minigames.add(new TapTheColor());
-//        minigames.add(new ClickThe6s());
-//        minigames.add(new WordScramble());
+        minigames.add(new TapTheColor());
+        minigames.add(new ClickThe6s());
         minigames.add(new Helicopter());
-        minigames.add(new Hexagons());
-//        minigames.add(new MathGame());
+//        minigames.add(new Hexagons());
+        minigames.add(new MathGame());
 
     }
 

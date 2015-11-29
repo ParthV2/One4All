@@ -3,7 +3,6 @@ package com.cse.one4all.minigame;
 import com.cse.one4all.base.BaseMinigame;
 import com.cse.one4all.managers.ResourcesManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +11,10 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.ITextureRegion;
 
 import java.lang.Integer;
 
@@ -28,6 +31,11 @@ public class MathGame extends BaseMinigame
     private int subtraction = 0, choice, i, x, y;
     private TimerHandler timer;
 //    private List<Text> textAnswers = new ArrayList<Text>(3);
+
+    private BitmapTextureAtlas mathGameTA;
+    private ITextureRegion greenHoopTR, redHoopTR;
+    private Sprite greenHoopSprite1, greenHoopSprite2, greenHoopSprite3,
+            redHoopSprite1, redHoopSprite2, redHoopSprite3;
 
     @Override
     public String getName() {
@@ -56,7 +64,7 @@ public class MathGame extends BaseMinigame
 //        choice = random.nextInt(1) + 1;
         for(int i = 0; i < 3; i++)
         {
-            int num = random.nextInt(50);
+            int num = random.nextInt(34);
             addition += num;
             if(i == 0)
                 subtraction += num;
@@ -127,12 +135,33 @@ public class MathGame extends BaseMinigame
 
     @Override
     public void loadResources() {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        mathGameTA = new BitmapTextureAtlas(ResourcesManager.getInstance().activity.getTextureManager(),
+                512,512, TextureOptions.BILINEAR);
+        greenHoopTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mathGameTA,
+                ResourcesManager.getInstance().activity, "circleGreen160.png", 0,0);
+        redHoopTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mathGameTA,
+                ResourcesManager.getInstance().activity, "circleRed160.png", 160,160);
+
+        redHoopSprite1 = new Sprite(205, 200, redHoopTR, scene.vbom);
+        redHoopSprite2 = new Sprite(405, 200, redHoopTR, scene.vbom);
+        redHoopSprite3 = new Sprite(605, 200, redHoopTR, scene.vbom);
+
+        greenHoopSprite1 = new Sprite(205, 200, greenHoopTR, scene.vbom);
+        greenHoopSprite2 = new Sprite(405, 200, greenHoopTR, scene.vbom);
+        greenHoopSprite3 = new Sprite(605, 200, greenHoopTR, scene.vbom);
+
+        mathGameTA.load();
+
+        minigame.attachChild(redHoopSprite1);
+        minigame.attachChild(redHoopSprite2);
+        minigame.attachChild(redHoopSprite3);
 
     }
 
     @Override
     public void unloadResources() {
-
+        mathGameTA.unload();
     }
 
     @Override
@@ -147,11 +176,11 @@ public class MathGame extends BaseMinigame
 //        y = 200;
         message = new Text(330, 400, ResourcesManager.getInstance().font, "Remember the three numbers", scene.vbom);
         minigame.attachChild(message);
-        text1 = new Text(200, 200, ResourcesManager.getInstance().numberFont, strings[0], scene.vbom);
+        text1 = new Text(200, 200, ResourcesManager.getInstance().numberFont2, strings[0], scene.vbom);
         minigame.attachChild(text1);
-        text2 = new Text(400, 200, ResourcesManager.getInstance().numberFont, strings[1], scene.vbom);
+        text2 = new Text(400, 200, ResourcesManager.getInstance().numberFont2, strings[1], scene.vbom);
         minigame.attachChild(text2);
-        text3 = new Text(600, 200, ResourcesManager.getInstance().numberFont, strings[2], scene.vbom);
+        text3 = new Text(600, 200, ResourcesManager.getInstance().numberFont2, strings[2], scene.vbom);
         minigame.attachChild(text3);
 
         timer = new TimerHandler(5f, new ITimerCallback() {
@@ -160,6 +189,15 @@ public class MathGame extends BaseMinigame
                 minigame.detachChild(text2);
                 minigame.detachChild(text3);
                 minigame.detachChild(message);
+
+                minigame.detachChild(redHoopSprite1);
+                minigame.detachChild(redHoopSprite2);
+                minigame.detachChild(redHoopSprite3);
+
+                minigame.attachChild(greenHoopSprite1);
+                minigame.attachChild(greenHoopSprite2);
+                minigame.attachChild(greenHoopSprite3);
+
                 if(choice == 1)
                 {
                     Text add = new Text(400, 400, ResourcesManager.getInstance().font, "What is the sum of three integers?", scene.vbom);
@@ -195,7 +233,7 @@ public class MathGame extends BaseMinigame
 //                    x+=100;
 //
 //                }
-                ans1 = new Text(200, 200, ResourcesManager.getInstance().numberFont, String.valueOf(answers[0]), scene.vbom)
+                ans1 = new Text(200, 200, ResourcesManager.getInstance().numberFont2, String.valueOf(answers[0]), scene.vbom)
                 {
                     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
                     {
@@ -209,7 +247,7 @@ public class MathGame extends BaseMinigame
                     }
                 };
 
-                ans2 = new Text(400, 200, ResourcesManager.getInstance().numberFont, String.valueOf(answers[1]), scene.vbom)
+                ans2 = new Text(400, 200, ResourcesManager.getInstance().numberFont2, String.valueOf(answers[1]), scene.vbom)
                 {
                     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
                     {
@@ -221,7 +259,7 @@ public class MathGame extends BaseMinigame
                         return true;
                     }
                 };
-                ans3 = new Text(600, 200, ResourcesManager.getInstance().numberFont, String.valueOf(answers[2]), scene.vbom)
+                ans3 = new Text(600, 200, ResourcesManager.getInstance().numberFont2, String.valueOf(answers[2]), scene.vbom)
                 {
                     public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY)
                     {
