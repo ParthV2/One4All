@@ -45,6 +45,7 @@ public class MathGame extends BaseMinigame
     @Override
     public void createMinigameScene()
     {
+        success = false;
         addition =0;
         subtraction=0;
         List<Integer> numPos = new ArrayList<Integer>(3);
@@ -162,6 +163,17 @@ public class MathGame extends BaseMinigame
     @Override
     public void unloadResources() {
         mathGameTA.unload();
+
+        minigame.detachChild(greenHoopSprite1);
+        minigame.detachChild(greenHoopSprite2);
+        minigame.detachChild(greenHoopSprite3);
+        minigame.detachChild(ans1);
+        minigame.detachChild(ans2);
+        minigame.detachChild(ans3);
+
+        scene.unregisterTouchArea(ans1);
+        scene.unregisterTouchArea(ans2);
+        scene.unregisterTouchArea(ans3);
     }
 
     @Override
@@ -174,7 +186,7 @@ public class MathGame extends BaseMinigame
     {
 //        x = 200;
 //        y = 200;
-        message = new Text(330, 400, ResourcesManager.getInstance().font, "Remember the three numbers", scene.vbom);
+        message = new Text(400, 375, ResourcesManager.getInstance().font, "Remember the three numbers", scene.vbom);
         minigame.attachChild(message);
         text1 = new Text(200, 200, ResourcesManager.getInstance().numberFont2, strings[0], scene.vbom);
         minigame.attachChild(text1);

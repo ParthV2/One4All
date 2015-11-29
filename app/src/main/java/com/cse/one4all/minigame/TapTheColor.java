@@ -107,8 +107,11 @@ public class TapTheColor extends BaseMinigame {
         engine.unregisterUpdateHandler(timer);
         scene.unregisterTouchArea(mCircle);
 
-        mCircle = null;
-        mText = null;
+        minigame.detachChild(mCircle);
+        minigame.detachChild(mText);
+
+        //mCircle = null;
+        //mText = null;
     }
 
     @Override

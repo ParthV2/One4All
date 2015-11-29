@@ -35,6 +35,7 @@ public class ClickThe6s extends BaseMinigame {
 
     @Override
     public void createMinigameScene() {
+        success = false;
         numbers = new ArrayList<>();
 
         sixClicked = 0;
@@ -64,7 +65,7 @@ public class ClickThe6s extends BaseMinigame {
                                 sixClicked++;
                             }
 
-                            if(sixClicked >= SIX_COUNT){
+                            if(sixClicked == SIX_COUNT){
                                 complete();
                             }
                         }

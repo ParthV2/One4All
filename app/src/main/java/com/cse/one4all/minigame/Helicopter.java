@@ -165,6 +165,9 @@ public class Helicopter extends BaseMinigame {
     {
         engine.unregisterUpdateHandler(timer);
         scene.unregisterTouchArea(thrust);
+
+        minigame.detachChild(helicopter);
+        minigame.detachChild(thrust);
     }
 
 
