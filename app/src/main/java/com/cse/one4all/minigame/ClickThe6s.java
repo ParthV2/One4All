@@ -1,23 +1,14 @@
 package com.cse.one4all.minigame;
 
 import android.graphics.Color;
-import android.util.Log;
 
-import com.cse.one4all.GameActivity;
 import com.cse.one4all.base.BaseMinigame;
 import com.cse.one4all.managers.ResourcesManager;
 
 import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.opengl.font.Font;
-import org.andengine.opengl.font.FontFactory;
-import org.andengine.opengl.texture.ITexture;
-import org.andengine.opengl.texture.TextureOptions;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ClickThe6s extends BaseMinigame {
@@ -44,6 +35,7 @@ public class ClickThe6s extends BaseMinigame {
 
     @Override
     public void createMinigameScene() {
+        success = false;
         numbers = new ArrayList<>();
 
         sixClicked = 0;
@@ -69,10 +61,11 @@ public class ClickThe6s extends BaseMinigame {
                         if(pSceneTouchEvent.isActionDown()){
                             if (this.getText() == "6") {
                                 this.setText("9");
+                                this.setColor(Color.GREEN);
                                 sixClicked++;
                             }
 
-                            if(sixClicked >= SIX_COUNT){
+                            if(sixClicked == SIX_COUNT){
                                 complete();
                             }
                         }

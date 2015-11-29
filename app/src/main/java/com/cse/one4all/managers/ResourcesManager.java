@@ -29,9 +29,11 @@ public class ResourcesManager {
     public GameActivity activity;
     public VertexBufferObjectManager vbom;
     public BitmapTextureAtlas splashTA, minigameMenuTA;
-    public ITextureRegion mBtnPlayTexture, mBtnExitTexture, logoTexture, logoTexture2, mBtnCodeTexture, backTexture, logo2Texture;
+    public ITextureRegion mBtnPlayTexture, logoTexture, logoTexture2, mBtnCodeTexture,
+            backTexture, logo2Texture, mBtnTapColorTexture, mBtnHelicopterTexture, mBtnMathGameTexture,
+            mBtnClick6Texture;
 
-    public Font font, menuFont, numberFont, p1LivesFont, p2LivesFont, p3LivesFont, p4LivesFont;
+    public Font font, numberFont, numberFont2, p1LivesFont;
 
     public BuildableBitmapTextureAtlas menuTextureAtlas;
 
@@ -48,7 +50,7 @@ public class ResourcesManager {
 
         splashTA = new BitmapTextureAtlas(activity.getTextureManager(), 2000, 700, TextureOptions.BILINEAR);
         logoTexture = BitmapTextureAtlasTextureRegionFactory.
-                createFromAsset(splashTA, activity, "Title2.png", 0, 64);
+                createFromAsset(splashTA, activity, "Title1.png", 0, 64);
         backTexture = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(splashTA, activity, "buttonBack.png", 0, 0);
 
@@ -80,6 +82,16 @@ public class ResourcesManager {
                 createFromAsset(menuTextureAtlas, activity, "buttonSP.png");
         logoTexture2 = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(menuTextureAtlas, activity, "Title2.png");
+        mBtnClick6Texture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonClick6.png");
+        mBtnHelicopterTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonHeli.png");
+        mBtnTapColorTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonTapColor.png");
+        mBtnMathGameTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonMath.png");
+
+
 
         try {
             this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -95,47 +107,30 @@ public class ResourcesManager {
 
     private void loadMenuFonts(){
         FontFactory.setAssetBasePath("font/");
+
         final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        final ITexture mainFontTexture2 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        final ITexture mainFontTexture3 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
+                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+        final ITexture mainFontTexture4 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
                 TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
         font = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(),
                 "LeagueGothic-Regular.otf", 50, true, Color.WHITE);
-        font.load();
-
-        final ITexture mainFontTexture2 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
-                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-
         numberFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture2, activity.getAssets(),
                 "LeagueGothic-Regular.otf", 128, true, Color.WHITE);
+        numberFont2 = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture3, activity.getAssets(),
+                "LeagueGothic-Regular.otf", 128, true, Color.BLACK);
+        p1LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture4, activity.getAssets(),
+                "LeagueGothic-Regular.otf", 32, true, Color.BLACK);
+
+        font.load();
         numberFont.load();
-
-        final ITexture mainFontTexture3 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
-                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-
-        p1LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture3, activity.getAssets(),
-                "LeagueGothic-Regular.otf", 25, true, Color.BLACK);
+        numberFont2.load();
         p1LivesFont.load();
 
-//        final ITexture mainFontTexture4 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
-//                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-//
-//        p2LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture4, activity.getAssets(),
-//                "LeagueGothic-Regular.otf", 25, true, Color.RED);
-//        p2LivesFont.load();
-//
-//        final ITexture mainFontTexture5 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
-//                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-//
-//        p3LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture5, activity.getAssets(),
-//                "LeagueGothic-Regular.otf", 25, true, Color.YELLOW);
-//        p3LivesFont.load();
-//
-//        final ITexture mainFontTexture6 = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256,
-//                TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-//
-//        p4LivesFont = FontFactory.createFromAsset(activity.getFontManager(), mainFontTexture6, activity.getAssets(),
-//                "LeagueGothic-Regular.otf", 25, true, Color.rgb(0,255,0));
-//        p4LivesFont.load();
     }
 
     public void loadMainMenuTextures() {
@@ -168,7 +163,7 @@ public class ResourcesManager {
 
     public void loadMinigameMenuResources() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        minigameMenuTA = new BitmapTextureAtlas(activity.getTextureManager(), 500, 500, TextureOptions.BILINEAR);
+        minigameMenuTA = new BitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         logo2Texture = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(minigameMenuTA,activity, "Title1.png", 0, 0);
         minigameMenuTA.load();
