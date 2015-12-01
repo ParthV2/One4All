@@ -17,6 +17,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        packagingOptions {
+            exclude 'main/AndroidManifest.xml'
+        }
     }
 }
 
@@ -24,4 +28,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile project(':andEngine')
+    compile project(':andEngineMultiplayerExtension')
 }

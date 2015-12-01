@@ -3,8 +3,10 @@ package com.cse.one4all.managers;
 import com.cse.one4all.base.BaseMinigame;
 import com.cse.one4all.minigame.ClickThe6s;
 import com.cse.one4all.minigame.Helicopter;
+import com.cse.one4all.minigame.Hexagons;
 import com.cse.one4all.minigame.MathGame;
 import com.cse.one4all.minigame.TapTheColor;
+import com.cse.one4all.scene.SceneType;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
@@ -37,19 +39,19 @@ public class MinigameManager {
 
     public static final int TIMER_SECONDS = 15;
 
-    private BitmapTextureAtlas resultTA;
-    private ITextureRegion greenCheckTR, redX_TR;
+
 
 
     public void startGame(){
         started = true;
+        SceneManager.getInstance().multiplayerScene.reset();
         SceneManager.getInstance().loadGameScene(engine);
         startRandomMinigame();
     }
 
     public void endGame(){
         started = false;
-        SceneManager.getInstance().loadMenuScene(engine);
+        SceneManager.getInstance().setScene(SceneType.GAMEOVER);
 
         if(currentMinigame != null){
             currentMinigame.getMinigame().detachSelf();
@@ -61,6 +63,19 @@ public class MinigameManager {
         }
 
         ResourcesManager.getInstance().engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
+        if(SceneManager.getInstance().minigameScene.gameClock != null){
+            ResourcesManager.getInstance().engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.gameClock);
+        }
+
+
+        PlayerManager.getInstance().stopServer();
+
+        engine.registerUpdateHandler(new TimerHandler(3f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
+                engine.unregisterUpdateHandler(pTimerHandler);
+                SceneManager.getInstance().loadMenuScene(engine);
+            }
+        }));
     }
 
 
@@ -71,6 +86,7 @@ public class MinigameManager {
     public BaseMinigame startMinigame(String name){
         for(BaseMinigame m : minigames){
             if(name.equalsIgnoreCase(m.getName())){
+
                 startMinigame(m, true);
                 return m;
             }
@@ -83,6 +99,9 @@ public class MinigameManager {
     }
 
     public void endMinigame(final BaseMinigame minigame, boolean success){
+        if(success){
+            PlayerManager.getInstance().sendMinigameComplete();
+        }
         minigame.getMinigame().detachSelf();
         minigame.resetMinigame();
 
@@ -91,18 +110,19 @@ public class MinigameManager {
         minigame.unloadResources();
 
         ResourcesManager.getInstance().engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.handler);
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        if(SceneManager.getInstance().minigameScene.gameClock != null){
+            ResourcesManager.getInstance().engine.unregisterUpdateHandler(SceneManager.getInstance().minigameScene.gameClock);
+        }
 
-        resultTA = new BitmapTextureAtlas(ResourcesManager.getInstance().activity.getTextureManager(), 512,512);
-        greenCheckTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(resultTA, ResourcesManager.getInstance().activity, "greenCheck.png", 0,0);
-        redX_TR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(resultTA, ResourcesManager.getInstance().activity, "redX.png", 0, 256);
 
-        final Sprite result = new Sprite(camera.getCenterX(), camera.getCenterY(), success ? greenCheckTR : redX_TR, vbom);
 
-        resultTA.load();
 
-//        final Text result = new Text(camera.getCenterX(), camera.getCenterY(),
-//                ResourcesManager.getInstance().font, success ? "Completed!" : "Failed!", vbom);
+        final Sprite result = new Sprite(camera.getCenterX(), camera.getCenterY(), success ? ResourcesManager.getInstance().greenCheckTR : ResourcesManager.getInstance().redX_TR, vbom);
+
+        if(PlayerManager.getInstance().player1.getPlayerHearts() <= 0 || (PlayerManager.getInstance().player2 != null && PlayerManager.getInstance().player2.getPlayerHearts() <= 0)){
+            //MinigameManager.getInstance().endGame();
+            //return;
+        }
 
         SceneManager.getInstance().minigameScene.attachChild(result);
 
@@ -113,11 +133,11 @@ public class MinigameManager {
                 result.detachSelf();
 
                 if(isSinglePlayer){
+                    PlayerManager.getInstance().stopServer();
                     SceneManager.getInstance().loadMenuScene(engine);
                 } else {
                     startRandomMinigame();
 
-                    SceneManager.getInstance().minigameScene.timeLeft = TIMER_SECONDS;
                     SceneManager.getInstance().minigameScene.populateScene();
                 }
 
@@ -137,6 +157,8 @@ public class MinigameManager {
             @Override
             public void onTimePassed(TimerHandler pTimerHandler) {
                 ResourcesManager.getInstance().engine.unregisterUpdateHandler(pTimerHandler);
+
+                SceneManager.getInstance().minigameScene.timeLeft = TIMER_SECONDS;
 
                 minigame.createMinigameScene();
                 SceneManager.getInstance().minigameScene.attachChild(minigame.getMinigame());
@@ -163,7 +185,7 @@ public class MinigameManager {
         minigames.add(new TapTheColor());
         minigames.add(new ClickThe6s());
         minigames.add(new Helicopter());
-//        minigames.add(new Hexagons());
+        //minigames.add(new Hexagons());
         minigames.add(new MathGame());
 
     }
@@ -176,4 +198,6 @@ public class MinigameManager {
     public boolean isSinglePlayer() {
         return isSinglePlayer;
     }
+
+    public boolean isStarted(){ return this.started; }
 }

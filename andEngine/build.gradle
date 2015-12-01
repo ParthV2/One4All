@@ -18,6 +18,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+
+        packagingOptions {
+            exclude 'main/AndroidManifest.xml'
+        }
     }
 
     sourceSets {
@@ -30,5 +34,9 @@ android {
             jni.srcDirs = ['jni']
             jniLibs.srcDirs = ['libs']
         }
+    }
+
+    packagingOptions {
+        exclude 'main/AndroidManifest.xml'
     }
 }

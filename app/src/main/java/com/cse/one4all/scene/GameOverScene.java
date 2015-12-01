@@ -6,17 +6,21 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
 
-public class LoadingScene extends BaseScene {
+/**
+ * Created by chewb on 11/30/2015.
+ */
+public class GameOverScene extends BaseScene {
 
-    private Text loading;
+    private Text gameOverText;
 
     @Override
     public void createScene() {
         setBackground(new Background(Color.BLACK));
 
-        loading = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.font, "Loading...", vbom);
+        gameOverText = new Text(camera.getCenterX(), camera.getCenterY(), resourcesManager.font, "Game Over!", vbom);
+        gameOverText.setColor(Color.RED);
 
-        attachChild(loading);
+        attachChild(gameOverText);
     }
 
     @Override
@@ -31,13 +35,13 @@ public class LoadingScene extends BaseScene {
 
     @Override
     public SceneType getSceneType() {
-        return SceneType.LOADING;
+        return SceneType.GAMEOVER;
     }
 
     @Override
     public void disposeScene() {
-        loading.detachSelf();
-        loading.dispose();
+        gameOverText.detachSelf();
+        gameOverText.dispose();
         this.detachSelf();
         this.dispose();
     }

@@ -64,8 +64,10 @@ public class ResourcesManager {
     }
 
     //---------------------------------------------
-    // MENU
+    // MAIN MENU
     //---------------------------------------------
+
+    public ITextureRegion joinGameTexture;
 
     public void loadMenuResources(){
         this.loadMenuGraphics();
@@ -73,11 +75,21 @@ public class ResourcesManager {
         this.loadMenuFonts();
     }
 
+    public void loadMinigameMenuResources() {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        minigameMenuTA = new BitmapTextureAtlas(activity.getTextureManager(), 512, 256, TextureOptions.BILINEAR);
+        logo2Texture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(minigameMenuTA,activity, "Title1.png", 0, 0);
+        minigameMenuTA.load();
+    }
+
     public void loadMenuGraphics() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         mBtnPlayTexture = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(menuTextureAtlas, activity, "buttonPlay.png");
+        joinGameTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(menuTextureAtlas, activity, "buttonJoin.png");
         mBtnCodeTexture = BitmapTextureAtlasTextureRegionFactory.
                 createFromAsset(menuTextureAtlas, activity, "buttonSP.png");
         logoTexture2 = BitmapTextureAtlasTextureRegionFactory.
@@ -135,21 +147,39 @@ public class ResourcesManager {
 
     public void loadMainMenuTextures() {
         this.menuTextureAtlas.load();
+        this.minigameMenuTA.load();
+        this.multiplayerMenuTA.load();
     }
 
     public void unloadMainMenuTextures(){
         this.menuTextureAtlas.unload();
+        this.minigameMenuTA.unload();
+        this.multiplayerMenuTA.unload();
     }
+
+    //---------------------------------------------
+    // GAME
+    //---------------------------------------------
+
+    public BitmapTextureAtlas resultTA;
+    public ITextureRegion greenCheckTR, redX_TR;
 
     public void loadGameResources(){
 
         this.loadGameGraphics();
         this.loadGameFonts();
         this.loadGameAudio();
+
     }
 
     private void loadGameGraphics() {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
+        resultTA = new BitmapTextureAtlas(ResourcesManager.getInstance().activity.getTextureManager(), 512,512);
+        greenCheckTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(resultTA, ResourcesManager.getInstance().activity, "greenCheck.png", 0,0);
+        redX_TR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(resultTA, ResourcesManager.getInstance().activity, "redX.png", 0, 256);
+
+        resultTA.load();
     }
 
     private void loadGameFonts() {
@@ -160,21 +190,33 @@ public class ResourcesManager {
 
     }
 
-
-    public void loadMinigameMenuResources() {
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        minigameMenuTA = new BitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-        logo2Texture = BitmapTextureAtlasTextureRegionFactory.
-                createFromAsset(minigameMenuTA,activity, "Title1.png", 0, 0);
-        minigameMenuTA.load();
-    }
-
     public void unloadGameTextures(){
-
+        resultTA.unload();
     }
 
-    public void unloadMinigameMenuTextures(){
-        minigameMenuTA.unload();
+
+    //---------------------------------------------
+    // MULTIPLAYER MENU
+    //---------------------------------------------
+
+    private BuildableBitmapTextureAtlas multiplayerMenuTA;
+    public ITextureRegion redPlayerTexture, bluePlayerTexture, yellowPlayerTexture;
+
+    public void loadMultiplayerMenuResources(){
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/multiplayer/");
+        multiplayerMenuTA = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+        redPlayerTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(multiplayerMenuTA, activity, "redPlayer.png");
+        bluePlayerTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(multiplayerMenuTA, activity, "bluePlayer.png");
+        yellowPlayerTexture = BitmapTextureAtlasTextureRegionFactory.
+                createFromAsset(multiplayerMenuTA, activity, "yellowPlayer.png");
+        try {
+            this.multiplayerMenuTA.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+            this.multiplayerMenuTA.load();
+        } catch (final ITextureAtlasBuilder.TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
     }
 
     public void init(Engine engine, GameActivity activity, Camera camera, VertexBufferObjectManager vbom){

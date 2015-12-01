@@ -3,8 +3,10 @@ package com.cse.one4all;
 import android.view.KeyEvent;
 
 import com.cse.one4all.managers.MinigameManager;
+import com.cse.one4all.managers.PlayerManager;
 import com.cse.one4all.managers.ResourcesManager;
 import com.cse.one4all.managers.SceneManager;
+import com.cse.one4all.utils.Logger;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;
@@ -14,10 +16,10 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
-import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.util.debug.Debug;
 
 import java.io.IOException;
 
@@ -30,6 +32,7 @@ public class GameActivity extends BaseGameActivity {
 
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions){
+        Debug.d("Engine created");
         return new LimitedFPSEngine(pEngineOptions, 60);
     }
 
@@ -68,6 +71,7 @@ public class GameActivity extends BaseGameActivity {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
 
+                //PlayerManager.getInstance().init();
                 MinigameManager.getInstance().init();
 
                 SceneManager.getInstance().createMenuScene();
@@ -81,6 +85,7 @@ public class GameActivity extends BaseGameActivity {
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
+
 
     @Override
     protected void onDestroy() {

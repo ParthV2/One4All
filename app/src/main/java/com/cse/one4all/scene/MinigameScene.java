@@ -1,7 +1,9 @@
 package com.cse.one4all.scene;
 
+import com.cse.one4all.Player;
 import com.cse.one4all.base.BaseScene;
 import com.cse.one4all.managers.MinigameManager;
+import com.cse.one4all.managers.PlayerManager;
 import com.cse.one4all.managers.ResourcesManager;
 
 import org.andengine.entity.sprite.Sprite;
@@ -24,6 +26,7 @@ public class MinigameScene extends BaseScene {
 
     private HUD minigameHUD;
     public TimerHandler handler;
+    public TimerHandler gameClock;
 
     private BitmapTextureAtlas HUDTextureAtlas;
     private ITextureRegion blueHeartTR, redHeartTR, greenHeartTR, yellowHeartTR, timerTR;
@@ -37,6 +40,7 @@ public class MinigameScene extends BaseScene {
 
     @Override
     public void populateScene() {
+
         timerText.setText(timeLeft + "");
 
         handler = new TimerHandler(1f, true, new ITimerCallback() {
@@ -52,7 +56,32 @@ public class MinigameScene extends BaseScene {
                 }
             }
         });
+        if(PlayerManager.getInstance().player.getPlayerName().equalsIgnoreCase("Player 1")){
+            gameClock = new TimerHandler(3f, true, new ITimerCallback() {
+                @Override
+                public void onTimePassed(TimerHandler pTimerHandler) {
+                    //if(PlayerManager.getInstance().player1.getPlayerHearts() <= 0 || (PlayerManager.getInstance().player2 != null && PlayerManager.getInstance().player2.getPlayerHearts() <= 0)){
+                    //    MinigameManager.getInstance().endGame();
+                    //    engine.unregisterUpdateHandler(pTimerHandler);
+                    //} else {
+
+                    //}
+
+                    PlayerManager.getInstance().player1.setPlayerHearts(PlayerManager.getInstance().player1.getPlayerHearts() - 1);
+                    if(PlayerManager.getInstance().player2 != null){
+                        PlayerManager.getInstance().player2.setPlayerHearts(PlayerManager.getInstance().player2.getPlayerHearts() - 1);
+                    }
+
+                    PlayerManager.getInstance().sendUpdateLives();
+
+                }
+            });
+            engine.registerUpdateHandler(gameClock);
+        }
+
+
         engine.registerUpdateHandler(handler);
+
 
     }
 
@@ -97,9 +126,19 @@ public class MinigameScene extends BaseScene {
         blueHeartSprite = new Sprite(0,0, blueHeartTR, vbom);
 
         timerSprite.setPosition(timerTR.getWidth() /2, camera.getHeight() - timerTR.getHeight());
-        redHeartSprite.setPosition(2 + redHeartTR.getWidth() /2, timerSprite.getY() - redHeartTR.getHeight() - 5);
-        yellowHeartSprite.setPosition(camera.getWidth() - (yellowHeartTR.getWidth() /2) -2,
-                camera.getHeight() - (yellowHeartTR.getHeight() /2) - 2);
+
+        if(PlayerManager.getInstance().player.getPlayerName().equalsIgnoreCase("Player 1")){
+            redHeartSprite.setPosition(2 + redHeartTR.getWidth() /2, timerSprite.getY() - redHeartTR.getHeight() - 5);
+            yellowHeartSprite.setPosition(camera.getWidth() - (yellowHeartTR.getWidth() /2) -2,
+                    camera.getHeight() - (yellowHeartTR.getHeight() /2) - 2);
+        } else {
+            redHeartSprite.setPosition(camera.getWidth() - (yellowHeartTR.getWidth() /2) -2,
+                    camera.getHeight() - (yellowHeartTR.getHeight() /2) - 2);
+            yellowHeartSprite.setPosition(2 + redHeartTR.getWidth() /2, timerSprite.getY() - redHeartTR.getHeight() - 5);
+        }
+
+
+
         greenHeartSprite.setPosition(yellowHeartSprite.getX() - greenHeartTR.getWidth() -5, yellowHeartSprite.getY());
         blueHeartSprite.setPosition(greenHeartSprite.getX() - blueHeartTR.getWidth() -5, greenHeartSprite.getY());
 
@@ -120,34 +159,48 @@ public class MinigameScene extends BaseScene {
         p1LivesText = new Text(0,0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         p2LivesText = new Text(0,0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         p3LivesText = new Text(0,0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        p4LivesText = new Text(0,0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
+        p4LivesText = new Text(0, 0, resourcesManager.p1LivesFont, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
 
         p1LivesText.setPosition(redHeartSprite.getX(), redHeartSprite.getY());
         p2LivesText.setPosition(blueHeartSprite.getX(), blueHeartSprite.getY());
         p3LivesText.setPosition(greenHeartSprite.getX(), greenHeartSprite.getY());
         p4LivesText.setPosition(yellowHeartSprite.getX(), yellowHeartSprite.getY());
 
-        p1LivesText.setText(p1LivesLeft + "");
-        p2LivesText.setText(p2LivesLeft + "");
-        p3LivesText.setText(p3LivesLeft + "");
-        p4LivesText.setText(p4LivesLeft + "");
+        p1LivesText.setText(PlayerManager.getInstance().player1.getPlayerHearts() + "");
+
+        //p3LivesText.setText(p3LivesLeft + "");
+        //p4LivesText.setText(p4LivesLeft + "");
 
 
         //Attach
         HUDTextureAtlas.load();
-        minigameHUD.attachChild(blueHeartSprite);
+        //minigameHUD.attachChild(blueHeartSprite);
         minigameHUD.attachChild(redHeartSprite);
-        minigameHUD.attachChild(greenHeartSprite);
-        minigameHUD.attachChild(yellowHeartSprite);
+        //minigameHUD.attachChild(greenHeartSprite);
+
         minigameHUD.attachChild(timerSprite);
 
         minigameHUD.attachChild(timerText);
         minigameHUD.attachChild(p1LivesText);
-        minigameHUD.attachChild(p2LivesText);
-        minigameHUD.attachChild(p3LivesText);
-        minigameHUD.attachChild(p4LivesText);
+        //minigameHUD.attachChild(p2LivesText);
+        //minigameHUD.attachChild(p3LivesText);
+
+
+        if(PlayerManager.getInstance().player2 != null){
+            p4LivesText.setText(PlayerManager.getInstance().player2.getPlayerHearts() + "");
+            minigameHUD.attachChild(yellowHeartSprite);
+            minigameHUD.attachChild(p4LivesText);
+        }
 
         camera.setHUD(minigameHUD);
 
+    }
+
+
+    public void updateHearts(){
+        p1LivesText.setText(PlayerManager.getInstance().player1.getPlayerHearts() + "");
+        if(PlayerManager.getInstance().player2 != null){
+            p4LivesText.setText(PlayerManager.getInstance().player2.getPlayerHearts() + "");
+        }
     }
 }

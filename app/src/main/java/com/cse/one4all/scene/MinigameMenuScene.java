@@ -2,6 +2,7 @@ package com.cse.one4all.scene;
 
 import com.cse.one4all.base.BaseScene;
 import com.cse.one4all.managers.MinigameManager;
+import com.cse.one4all.managers.PlayerManager;
 import com.cse.one4all.managers.ResourcesManager;
 import com.cse.one4all.managers.SceneManager;
 
@@ -38,6 +39,8 @@ public class MinigameMenuScene extends BaseScene implements MenuScene.IOnMenuIte
     @Override
     public void onBackKeyPressed() {
         SceneManager.getInstance().setScene(SceneType.MENU);
+        PlayerManager.getInstance().disconnect();
+        PlayerManager.getInstance().stopServer();
     }
 
     @Override
@@ -100,6 +103,7 @@ public class MinigameMenuScene extends BaseScene implements MenuScene.IOnMenuIte
             case MENU_TAP_COLOR:
                 SceneManager.getInstance().loadGameScene(engine);
                 MinigameManager.getInstance().startMinigame("Tap the Color");
+                //MinigameManager.getInstance().startMinigame("Hexagons");
                 return true;
             case MENU_HELICOPTER:
                 SceneManager.getInstance().loadGameScene(engine);

@@ -6,5 +6,6 @@ public enum SceneType {
     MINIGAME,
     MINIGAMEMENU,
     LOADING,
-    RESULT
+    MULTIPLAYER,
+    GAMEOVER
 }

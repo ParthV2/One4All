@@ -24,6 +24,7 @@ public class TapTheColor extends BaseMinigame {
     private ITiledTextureRegion mCircleTiledTextureRegion;
     private TiledSprite mCircle;
     private Text mText;
+    private Text directionsText;
 
     private int currentTextName = 0;
     private static final List<String> ColorNames = new ArrayList<>();
@@ -59,6 +60,8 @@ public class TapTheColor extends BaseMinigame {
     @Override
     public void createMinigameScene() {
 
+        directionsText = new Text(camera.getCenterX(), camera.getCenterY() + 200, ResourcesManager.getInstance().font, "Tap When The Colors Match", scene.vbom);
+
         ColorNames.add("Red");
         ColorNames.add("Blue");
         ColorNames.add("Green");
@@ -91,13 +94,14 @@ public class TapTheColor extends BaseMinigame {
             }
         };
 
-        mText = new Text(camera.getCenterX(), camera.getCenterY() + 128, ResourcesManager.getInstance().font, "RedBlueGreenYellow", scene.vbom);
+        mText = new Text(camera.getCenterX(), camera.getCenterY() - 100, ResourcesManager.getInstance().font, "RedBlueGreenYellow", scene.vbom);
         currentTextName = 3;
         mText.setText(ColorNames.get(currentTextName));
         mText.setColor(Color.BLUE);
 
         minigame.attachChild(mCircle);
         minigame.attachChild(mText);
+        minigame.attachChild(directionsText);
 
         scene.registerTouchArea(mCircle);
     }

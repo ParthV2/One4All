@@ -163,7 +163,7 @@ public class Helicopter extends BaseMinigame {
     @Override
     public void disposeMinigameScene()
     {
-        engine.unregisterUpdateHandler(timer);
+
         scene.unregisterTouchArea(thrust);
 
         minigame.detachChild(helicopter);
@@ -198,7 +198,7 @@ public class Helicopter extends BaseMinigame {
 
     @Override
     public void onFinish() {
-
+        engine.unregisterUpdateHandler(timer);
     }
 
 }

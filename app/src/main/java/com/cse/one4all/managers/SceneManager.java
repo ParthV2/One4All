@@ -1,11 +1,12 @@
 package com.cse.one4all.managers;
 
 import com.cse.one4all.base.BaseScene;
+import com.cse.one4all.scene.GameOverScene;
 import com.cse.one4all.scene.LoadingScene;
 import com.cse.one4all.scene.MainMenuScene;
 import com.cse.one4all.scene.MinigameMenuScene;
 import com.cse.one4all.scene.MinigameScene;
-import com.cse.one4all.scene.ResultScene;
+import com.cse.one4all.scene.MultiplayerScene;
 import com.cse.one4all.scene.SceneType;
 import com.cse.one4all.scene.SplashScene;
 
@@ -28,9 +29,9 @@ public class SceneManager {
     public BaseScene mainMenuScene;
     public MinigameScene minigameScene;
     public BaseScene minigameMenuScene;
-    private BaseScene loadingScene;
-    public BaseScene resultScene;
-
+    public BaseScene loadingScene;
+    public MultiplayerScene multiplayerScene;
+    public BaseScene gameOverScene;
 
     public void setScene(BaseScene scene){
         engine.setScene(scene);
@@ -55,8 +56,11 @@ public class SceneManager {
             case MINIGAMEMENU:
                 setScene(minigameMenuScene);
                 break;
-            case RESULT:
-                setScene(resultScene);
+            case MULTIPLAYER:
+                setScene(multiplayerScene);
+                break;
+            case GAMEOVER:
+                setScene(gameOverScene);
                 break;
         }
     }
@@ -69,9 +73,13 @@ public class SceneManager {
     public void createMenuScene() {
         ResourcesManager.getInstance().loadMenuResources();
         ResourcesManager.getInstance().loadMinigameMenuResources();
+        ResourcesManager.getInstance().loadMultiplayerMenuResources();
         mainMenuScene = new MainMenuScene();
         minigameMenuScene = new MinigameMenuScene();
+        multiplayerScene = new MultiplayerScene();
         loadingScene = new LoadingScene();
+        gameOverScene = new GameOverScene();
+
         SceneManager.getInstance().setScene(mainMenuScene);
         disposeSplashScene();
     }
@@ -92,7 +100,6 @@ public class SceneManager {
     public void loadGameScene(final Engine mEngine) {
         setScene(loadingScene);
         ResourcesManager.getInstance().unloadMainMenuTextures();
-        ResourcesManager.getInstance().unloadMinigameMenuTextures();
 
         ResourcesManager.getInstance().loadGameResources();
         minigameScene = new MinigameScene();
@@ -104,11 +111,6 @@ public class SceneManager {
 //
 //            }
 //        }));
-    }
-
-    public void loadResultScene(){
-        resultScene = new ResultScene();
-        setScene(resultScene);
     }
 
     public void createMinigameScene(){

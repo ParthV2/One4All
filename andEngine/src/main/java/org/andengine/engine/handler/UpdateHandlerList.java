@@ -44,7 +44,11 @@ public class UpdateHandlerList extends SmartList<IUpdateHandler> implements IUpd
 	public void onUpdate(final float pSecondsElapsed) {
 		final int handlerCount = this.size();
 		for (int i = handlerCount - 1; i >= 0; i--) {
-			this.get(i).onUpdate(pSecondsElapsed);
+			try {
+				this.get(i).onUpdate(pSecondsElapsed);
+			} catch(IndexOutOfBoundsException ex){
+
+			}
 		}
 	}
 
