@@ -1,14 +1,14 @@
-![One4All](app\src\main\assets\gfx\Title3.png)
+![One4All](https://github.com/ColePillars/One4All/blob/master/app/src/main/assets/gfx/Title3.png)
 
-One4All is a 4 player (currently only 2 player) team based mobile game for Android phones. 
+One4All is a 4 player, team based puzzle game. Each player is given a different task and completing it successfully is critical to the team’s success. The player doesn’t control their own lives, but another teammate does. If one team member fails, everyone fails.
 
 
 Latest APK
 
-
+--------------------
 
 #Report
-------------------
+
 ## Need Assessment 
 
 There are numerous mobile games already on the market. Not many of them, however, employ team based elements. Even further still, there are no team based games where success or failure is determined by the weakest link. We wanted to achieve the goal of adding a unique game to the mobile marketplace. The mobile game marketplace has seen a large amount of growth in recent history. We wanted to add a niche and unexplored cluster to this large market. This project will also give our team members an opportunity to work on a mobile app that incorporates multiplayer functionality, which is in high demand in the current job market.  Even though the mini games will be fairly easy for the average person to complete, the game as a whole will be challenging and a breath of fresh air to the growing app market.
@@ -49,7 +49,7 @@ Based on the feedback from the five users, we have seen that our game is satisfa
 
 ## Deficiencies 
 
-With the time constraint we only had time to complete four different minigames. To improve the game in the future, we could make more minigames. In addition, our multiplayer is only over local wifi and we would like to improve this by making our players be able to connect with players elsewhere too. We could also continue to get feedback from users to improve the design of our application if they do not like the way it looks. In order to achieve these goals we would have to implement more games into our application and do further testing to get feedback from users on whether they like the design or not. Furthermore, we would need to do more research on how the multiplayer function works and implement the global multiplayer function.
+With the time constraint we only had time to complete four different minigames. To improve the game in the future, we could make more minigames. In addition, our multiplayer is only over local wifi and limited to two players. We would like to improve this by making our players be able to connect with players elsewhere too and expand the multiplayer to work with four players simultaneously. We could also continue to get feedback from users to improve the design of our application if they do not like the way it looks. In order to achieve these goals we would have to implement more games into our application and do further testing to get feedback from users on whether they like the design or not. Furthermore, we would need to do more research on how the multiplayer function works and implement the global multiplayer function.
 
 
 ## Teamwork 
