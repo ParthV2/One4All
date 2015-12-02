@@ -136,11 +136,11 @@ public class MainMenuScene extends BaseScene implements MenuScene.IOnMenuItemCli
             @Override
             public void run() {
                 final EditText portEditText = new EditText(game);
-                portEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                portEditText.setInputType(InputType.TYPE_CLASS_PHONE);
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(game);
                 alert.setView(portEditText);
-                alert.setTitle("Enter Game Code:");
+                alert.setTitle("Enter IP Address:");
                 alert.setMessage("");
                 alert.setCancelable(false);
                 alert.setPositiveButton("Join", new DialogInterface.OnClickListener() {

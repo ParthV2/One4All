@@ -51,28 +51,56 @@ public class PlayerManager {
     public String getGameCode(){
         try {
             String ip = WifiUtils.getWifiIPv4Address(ResourcesManager.getInstance().activity);
+            return ip;
+            /*
             if(ip.equalsIgnoreCase("0.0.0.0")){
                 return "-1";
             }
-            return ip.split("\\.")[3];
+            String[] split = ip.split("\\.");
+            String str1 = padLeft(split[2], "0", 3 - split[2].toCharArray().length);
+            String str2 = padLeft(split[3], "0", 3 - split[3].toCharArray().length);
+            Logger.debug(str1 +"." + str2);
+            return str1 + str2;
+            */
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        return "-1";
+        return "127.0.0.1";
+    }
+
+    private String padLeft(String str, String value, int length){
+        String newStr = str;
+        for(int i = 0; i < length; i++){
+            newStr = value + newStr;
+        }
+        return newStr;
+    }
+
+    private String trimLeft(String str, char trim){
+        char[] chars = str.toCharArray();
+        for(int i = 0; i < chars.length; i++){
+            if(chars[i] != trim){
+                return str.substring(i, chars.length - i);
+            }
+        }
+        return "";
     }
 
     public String gameCodeToIp(String gameCode){
+        return gameCode;
+        /*
         if(gameCode.equalsIgnoreCase("-1")){
             return "127.0.0.1";
         }
 
         try {
             String[] arr = WifiUtils.getWifiIPv4Address(ResourcesManager.getInstance().activity).split("\\.");
-            return arr[0] + "." + arr[1] + "." + arr[2] + "." + gameCode;
+            return arr[0] + "." + arr[1] + "." + trimLeft(gameCode.substring(0, 3), '0') + "." + trimLeft(gameCode.substring(3, 3), '0');
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
         return "-1";
+        */
     }
 
     public boolean isServerRunning(){

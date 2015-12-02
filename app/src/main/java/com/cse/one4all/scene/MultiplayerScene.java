@@ -152,7 +152,7 @@ public class MultiplayerScene extends BaseScene implements MenuScene.IOnMenuItem
     }
 
     public void onServerStart(String gameCode){
-        gameCodeText = new Text(camera.getCenterX(), 300, resourcesManager.font, "Game Code: " + gameCode, vbom);
+        gameCodeText = new Text(camera.getCenterX(), 300, resourcesManager.font, "IP Address: " + gameCode, vbom);
         waitingForPlayersText = new Text(camera.getCenterX(), 50, resourcesManager.font, "Press to start", vbom){
             @Override
             public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
