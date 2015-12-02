@@ -1,20 +1,22 @@
-![One4All](https://github.com/ColePillars/One4All/blob/master/app/src/main/assets/gfx/Title3.png)
+![One4All](https://github.com/ColePillars/One4All/blob/master/githubImages/Title3.png)
 
 One4All is a 4 player, team based puzzle game. Each player is given a different task and completing it successfully is critical to the team’s success. The player doesn’t control their own lives, but another teammate does. If one team member fails, everyone fails.
 
 
-Latest APK
+[Latest APK](https://github.com/ColePillars/One4All/releases)
+
+[Game Screenshots](https://github.com/ColePillars/One4All/wiki/Game-Screenshots)
 
 --------------------
 
 #Report
 
-## Need Assessment 
+### Need Assessment 
 
 There are numerous mobile games already on the market. Not many of them, however, employ team based elements. Even further still, there are no team based games where success or failure is determined by the weakest link. We wanted to achieve the goal of adding a unique game to the mobile marketplace. The mobile game marketplace has seen a large amount of growth in recent history. We wanted to add a niche and unexplored cluster to this large market. This project will also give our team members an opportunity to work on a mobile app that incorporates multiplayer functionality, which is in high demand in the current job market.  Even though the mini games will be fairly easy for the average person to complete, the game as a whole will be challenging and a breath of fresh air to the growing app market.
 
 
-## Specifications of the System
+### Specifications of the System
 
 Our game application is designed to run on Android phones, where four users play a co-operative game. In our multiplayer function, we have it designed that one user hosts the game and they invite three other friends. In this game, each user plays one minigame at a time. Our application is designed so the weakest player defines the success of the whole team. If one player cannot complete their minigame, one of their teammates loses a life. Once one player loses all hislives, the whole team loses. We designed these games to be random so there will be variation in the games on repeated playthroughs.
 
@@ -27,7 +29,7 @@ Through the process of our project, we decided to scrap the idea of four screens
 Design of the Project: We have designed our game application in a specific way to enhance the gaming process. We intentionally incorporated a black background in every game because most gamers tend to like it in a gaming atmosphere. This helps people to focus on the tasks at hand. We also made the game timer fifteen seconds to make these simple games become more difficult under this time crunch.
 
 
-## Developers
+### Developers
 
 **Matthew DeMott**, *Minigame Programmer and Design Manager*: Throughout the project he was in charge of programming minigames and working on the design of the menu features. In addition, he worked on the written progress reports as well as the presentation slides.
 
@@ -42,17 +44,17 @@ Design of the Project: We have designed our game application in a specific way t
 **Dave Stager**, *Multiplayer Programmer*: The multiplayer function of our application was one of the most challenging parts because it was new to basically all of us. Therefore, we delegated this responsibility to one member. Dave worked mostly on this function so we could implement it in time for the final presentation.
 
 
-## User Testing
+### User Testing
 
 Based on the feedback from the five users, we have seen that our game is satisfactory to what we wanted. Some games are harder than others which is what we were going for. Our games seem to be easy to understand for the users and the timer is the proper amount on average. When picking interview subjects, we aimed for our target market, thus giving us the proper feedback. Four of the five users liked our basic gaming environment. We found some bugs that we have now fixed and obtained good suggestions for games we could add in the future. Overall, the users liked our application.
 
 
-## Deficiencies 
+### Deficiencies 
 
 With the time constraint we only had time to complete four different minigames. To improve the game in the future, we could make more minigames. In addition, our multiplayer is only over local wifi and limited to two players. We would like to improve this by making our players be able to connect with players elsewhere too and expand the multiplayer to work with four players simultaneously. We could also continue to get feedback from users to improve the design of our application if they do not like the way it looks. In order to achieve these goals we would have to implement more games into our application and do further testing to get feedback from users on whether they like the design or not. Furthermore, we would need to do more research on how the multiplayer function works and implement the global multiplayer function.
 
 
-## Teamwork 
+### Teamwork 
 
 **Demonstrate ability to elicit and formulate requirements and scope of software projects:** One of the first requirements for this class was the project proposal. This required us to foresee the tools and time needed to complete an application. This was not an easy task because our group had never programmed a mobile application. We formulated an implementation plan that projected how much time was needed for each responsibility and which team member would be in charge of each task. In addition, we were required to predict what tools we would need for the completion of this project.
 Effectively use software engineering tools to develop and manage software project: In regards to programming a mobile application, we chose to use android studio because of its accessibility and documentation. This made it easy for every member to obtain it and learn about it on their own. In addition, android studio had a built in version control software manager. To manage our code and to keep every member of our group on the same page, we used Git to control our code. Furthermore, we used AndEngine, which is a game engine that allowed us to not have to build our games exactly from scratch. AndEngine allowed us to use functions that were built in for us to use in our application.
@@ -73,7 +75,3 @@ Effectively use software engineering tools to develop and manage software projec
 	- [AndEngineMultiplayerExtension](https://github.com/nicolasgramlich/AndEngineMultiplayerExtension)
 
 
-## Misc.
-
-- How to install APK
-- Game screenshots
