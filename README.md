@@ -1,4 +1,4 @@
-![One4All](https://github.com/ColePillars/One4All/blob/master/githubImages/Title3.png)
+![One4All](./githubImages/Title3.png)
 
 One4All is a 4 player, team based puzzle game. Each player is given a different task and completing it successfully is critical to the team’s success. The player doesn’t control their own lives, but another teammate does. If one team member fails, everyone fails.
 
@@ -9,7 +9,7 @@ One4All is a 4 player, team based puzzle game. Each player is given a different 
 
 --------------------
 
-#Report
+# Report
 
 ### Need Assessment 
 
